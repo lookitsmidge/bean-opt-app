@@ -1,0 +1,120 @@
+<!-- Sidebar (Base Layer - Desktop Only) -->
+<aside [class]="isCollapsed() ? 'w-24' : 'w-72'" 
+       class="desktop-sidebar hidden lg:flex inset-y-0 left-0 z-50 flex-col border-none sidebar-transition overflow-hidden">
+  
+  <!-- Logo Area -->
+  <div class="h-24 flex items-center px-6">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="logo-box w-12 h-12 flex-shrink-0 rounded-[1.25rem] shadow-sm overflow-hidden flex items-center justify-center">
+        @if (logoSrc()) {
+          <img [src]="logoSrc()" class="w-full h-full object-cover" alt="BeanOpt Logo" />
+        } @else {
+          <mat-icon class="logo-icon">coffee</mat-icon>
+        }
+      </div>
+      <span [class.opacity-0]="isCollapsed()" 
+            class="logo-text text-2xl pr-2 font-black italic tracking-tighter uppercase transition-opacity duration-300 truncate">BeanOpt</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto overflow-x-hidden custom-scrollbar">
+    @for (btn of desktopButtons(); track btn.link) {
+      <button [routerLink]="btn.link"
+              routerLinkActive="nav-active"
+              #rla="routerLinkActive"
+              [class.nav-inactive]="!rla.isActive"
+              class="nav-btn w-full flex items-center px-5 py-4 text-xs uppercase tracking-widest rounded-2xl transition-all duration-300 group italic min-w-0">
+        <span class="nav-icon flex-shrink-0 transition-colors"
+              [class.mr-4]="!isCollapsed()"
+              [class.mx-auto]="isCollapsed()">
+          <mat-icon>{{ btn.svgName }}</mat-icon>
+        </span>
+        <span [class.opacity-0]="isCollapsed()" 
+              [class.w-0]="isCollapsed()"
+              class="nav-label transition-all duration-300 truncate">
+            {{ btn.ariaLabel }}
+        </span>
+      </button>
+    }
+
+  </nav>
+
+  <!-- Bottom Section: Toggle + Profile -->
+  <div class="px-4 pb-6">
+    
+    <!-- Expand Button when Collapsed -->
+    @if (isCollapsed()) {
+      <div class="flex justify-center mb-3">
+        <button (click)="toggleCollapse()" 
+                class="expand-btn p-2 rounded-2xl transition-all flex items-center justify-center border-none">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    }
+
+    <!-- User Profile Snippet (Inlined Placeholder) -->
+    <div class="profile-container relative">
+      <!-- Profile Trigger Button -->
+      <button [matMenuTriggerFor]="profileMenu" 
+              class="profile-trigger flex items-center gap-3 p-3 rounded-2xl w-full transition-all cursor-pointer border-none bg-transparent relative z-50" 
+              [class.justify-center]="isCollapsed()">
+        <div class="avatar-circle flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden shadow-sm">
+          @if (user()?.photoUrl) {
+            <img [src]="user()?.photoUrl" alt="User Avatar" class="w-full h-full object-cover" />
+          } @else {
+            <span class="avatar-initials text-xs font-black select-none uppercase">
+              {{ (user()?.displayName?.[0] || user()?.email?.[0] || '?').toUpperCase() }}
+            </span>
+          }
+        </div>
+        @if (!isCollapsed()) {
+          <div class="user-details flex flex-col text-left min-w-0 flex-1">
+            <span class="display-name text-sm font-semibold truncate">{{ user()?.displayName || 'User' }}</span>
+            <span class="email-address text-xs truncate">{{ user()?.email || 'No email' }}</span>
+          </div>
+          
+          <!-- Collapse Button Inside (to the right) -->
+          <button (click)="toggleCollapse(); $event.stopPropagation()" 
+                  class="collapse-btn p-2 rounded-2xl transition-all flex items-center justify-center border-none">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+        }
+      </button>
+
+      <!-- Profile Dropdown Menu (Angular Material Overlay) -->
+      <mat-menu #profileMenu="matMenu" class="profile-menu-panel" xPosition="after" yPosition="above">
+        @if (isAdmin()) {
+          <button mat-menu-item (click)="adminToggleRequested.emit()">
+            <mat-icon>{{ isAdminModeActive() ? 'shield' : 'admin_panel_settings' }}</mat-icon>
+            <span>{{ isAdminModeActive() ? 'Disable Admin' : 'Admin Panel' }}</span>
+          </button>
+        }
+        <button mat-menu-item routerLink="/auth/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item (click)="logoutRequested.emit()" class="logout-menu-item">
+          <mat-icon>logout</mat-icon>
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
+    </div>
+
+  </div>
+</aside>
+
+<!-- Mobile Bottom Navigation (Docked Pill) -->
+<div class="fixed bottom-6 left-0 right-0 z-30 lg:hidden flex justify-center pointer-events-none px-4">
+  <nav class="mobile-nav flex items-center gap-1.5 px-3 py-2.5 rounded-full pointer-events-auto overflow-hidden">
+    @for (btn of mobileButtons(); track btn.link) {
+      <button [routerLink]="btn.link"
+              routerLinkActive="mobile-nav-active"
+              #rlaMob="routerLinkActive"
+              [class.mobile-nav-inactive]="!rlaMob.isActive"
+              class="mobile-nav-btn flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300">
+        <mat-icon>{{ btn.svgName }}</mat-icon>
+      </button>
+    }
+  </nav>
+</div>

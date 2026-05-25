@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<lib-shell [navButtons]="shellNavigationButtons()" [user]="{ isAnonymous: false }">
+
+    <router-outlet></router-outlet>
+</lib-shell>

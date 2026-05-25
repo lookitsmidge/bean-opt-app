@@ -1,0 +1,79 @@
+<!-- Ambient Gradient Background with Abstract Blobs -->
+<div class="shell-container flex h-screen text-slate-900 font-sans overflow-hidden relative">
+  
+  <!-- Ambient Blurs for Glassmorphism Background -->
+  <div class="ambient-blur blur-blob-1 absolute rounded-full pointer-events-none"></div>
+  <div class="ambient-blur blur-blob-2 absolute rounded-full pointer-events-none"></div>
+  <div class="ambient-blur blur-blob-3 absolute rounded-full pointer-events-none"></div>
+
+  <!-- Sidebar -->
+  @if (user()) {
+    <lib-sidebar 
+        [logoSrc]="logoSrc()" 
+        [user]="user()" 
+        [navButtons]="navButtons()" 
+        [isAdmin]="isAdmin()"
+        [isAdminModeActive]="isAdminModeActive()"
+        (adminToggleRequested)="adminToggleRequested.emit()"
+        (logoutRequested)="logoutRequested.emit()">
+    </lib-sidebar>
+  } @else {
+    <div class="lg:ml-4"></div>
+  }
+
+  <!-- Main Content (Stacked Page Effect) -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-hidden relative m-1 mb-1 lg:my-2 lg:mr-2 lg:ml-0 glass-panel rounded-[2.5rem] shadow-[0_8px_40px_rgba(0,0,0,0.08)]">
+    
+    <!-- Floating Content Actions (Mobile Only Profile Trigger) -->
+    @if (user()) {
+      <div class="lg:hidden absolute top-6 right-6 z-40 flex items-center gap-3 pointer-events-none">
+        
+        <!-- Profile Menu (Floating Pill Wrapper) -->
+        <div class="pointer-events-auto relative">
+          <button [matMenuTriggerFor]="mobileProfileMenu" 
+                  class="mobile-profile-trigger w-12 h-12 rounded-2xl flex items-center justify-center overflow-hidden transition-all active:scale-95 cursor-pointer relative z-50 border-none bg-transparent">
+            @if (user()?.photoUrl) {
+              <img [src]="user()?.photoUrl" alt="User profile image" class="w-full h-full object-cover" />
+            } @else {
+              <div class="fallback-gradient w-full h-full flex items-center justify-center text-white text-xs font-black italic">
+                {{ (user()?.displayName?.[0] || user()?.email?.[0] || '?').toUpperCase() }}
+              </div>
+            }
+          </button>
+
+          <!-- Floating Dropdown Menu -->
+          <mat-menu #mobileProfileMenu="matMenu" class="profile-menu-panel" xPosition="before" yPosition="below">
+            @if (isAdmin()) {
+              <button mat-menu-item (click)="adminToggleRequested.emit()">
+                <mat-icon>{{ isAdminModeActive() ? 'shield' : 'admin_panel_settings' }}</mat-icon>
+                <span>{{ isAdminModeActive() ? 'Disable Admin' : 'Admin Panel' }}</span>
+              </button>
+            }
+            <button mat-menu-item routerLink="/auth/settings">
+              <mat-icon>settings</mat-icon>
+              <span>Settings</span>
+            </button>
+            <button mat-menu-item (click)="logoutRequested.emit()" class="logout-menu-item">
+              <mat-icon>logout</mat-icon>
+              <span>Sign Out</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+    }
+
+    <!-- Scrollable Content Area -->
+    <div class="flex-1 overflow-y-auto p-4 pb-28 sm:p-6 lg:p-8 lg:pb-10 relative scroll-smooth overflow-x-hidden custom-scrollbar">
+      <ng-content></ng-content>
+    </div>
+  </main>
+
+</div>
+
+<!-- Global Dialogs and Extra UI Placeholders (Z-Index guarantees layering) -->
+<div class="fixed inset-0 pointer-events-none z-[200]">
+  <!-- Placeholders for toasts and dialogs to be injected later -->
+  <div class="toast-placeholder-root fixed top-4 right-4 flex flex-col gap-2 pointer-events-none"></div>
+  <div class="dialog-placeholder-root fixed inset-0 flex items-center justify-center pointer-events-none"></div>
+  <ng-content select="[extra-ui]"></ng-content>
+</div>

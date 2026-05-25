@@ -1,0 +1,96 @@
+// Shell Base Container
+.shell-container {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mat-sys-surface-container-low) 95%, var(--mat-sys-primary) 5%),
+    color-mix(in srgb, var(--mat-sys-surface) 95%, var(--mat-sys-tertiary) 5%)
+  );
+  color: var(--mat-sys-on-surface);
+}
+
+// Ambient Blurs
+.ambient-blur {
+  pointer-events: none;
+  z-index: 0;
+}
+
+.blur-blob-1 {
+  background: color-mix(in srgb, var(--mat-sys-primary) 25%, transparent);
+  filter: blur(100px);
+  -webkit-filter: blur(100px);
+  top: -10%;
+  left: -10%;
+  width: 40%;
+  height: 40%;
+}
+
+.blur-blob-2 {
+  background: color-mix(in srgb, var(--mat-sys-tertiary) 20%, transparent);
+  filter: blur(120px);
+  -webkit-filter: blur(120px);
+  bottom: -10%;
+  right: -5%;
+  width: 50%;
+  height: 50%;
+}
+
+.blur-blob-3 {
+  background: color-mix(in srgb, var(--mat-sys-primary) 15%, transparent);
+  filter: blur(80px);
+  -webkit-filter: blur(80px);
+  top: 20%;
+  right: 10%;
+  width: 30%;
+  height: 30%;
+}
+
+// Glass Panel (Content Area wrapper)
+.glass-panel {
+  background: color-mix(in srgb, var(--mat-sys-surface) 85%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 20%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .glass-panel {
+    background: color-mix(in srgb, var(--mat-sys-surface) 50%, transparent);
+    border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 15%, transparent);
+  }
+}
+
+// Mobile Trigger Button
+.mobile-profile-trigger {
+  background: color-mix(in srgb, var(--mat-sys-surface) 80%, transparent);
+  border: 2px solid var(--mat-sys-outline-variant);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--mat-sys-shadow) 8%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-surface) 95%, transparent);
+  }
+}
+
+.fallback-gradient {
+  background: linear-gradient(135deg, var(--mat-sys-primary), var(--mat-sys-tertiary));
+}
+
+
+// Custom scrollbars
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent);
+    border-radius: 3px;
+  }
+}

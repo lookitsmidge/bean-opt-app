@@ -1,0 +1,206 @@
+// Custom Scrollbar styling
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent);
+    border-radius: 3px;
+  }
+}
+
+// Sidebar container transition
+.sidebar-transition {
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+// Logo Box styling
+.logo-box {
+  background: color-mix(in srgb, var(--mat-sys-surface-container) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.logo-icon {
+  color: var(--mat-sys-primary);
+}
+
+.logo-text {
+  color: var(--mat-sys-on-surface);
+}
+
+// Navigation Buttons
+.nav-btn {
+  border: 1px solid transparent;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+}
+
+.nav-active {
+  background: color-mix(in srgb, var(--mat-sys-primary-container) 80%, transparent);
+  color: var(--mat-sys-on-primary-container);
+  font-weight: 800;
+  border-color: color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--mat-sys-primary) 8%, transparent);
+
+  .nav-icon {
+    color: var(--mat-sys-primary);
+  }
+}
+
+.nav-inactive {
+  color: var(--mat-sys-on-surface-variant);
+  font-weight: 500;
+
+  .nav-icon {
+    color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 70%, transparent);
+  }
+
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+    color: var(--mat-sys-on-surface);
+
+    .nav-icon {
+      color: var(--mat-sys-on-surface);
+    }
+  }
+}
+
+.settings-divider {
+  border-color: color-mix(in srgb, var(--mat-sys-outline-variant) 20%, transparent);
+}
+
+// Sidebar Toggle Buttons (Expand & Collapse - Transparent, Subtle Profile Style)
+.expand-btn, .collapse-btn {
+  background: transparent;
+  border: none;
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 50%, transparent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: var(--mat-sys-primary);
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 10%, transparent);
+  }
+}
+
+.collapse-btn {
+  z-index: 60; // Ensure it renders above the profile menu trigger clickable zone
+}
+
+// Profile container & snippet
+.profile-trigger {
+  color: var(--mat-sys-on-surface);
+  
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 6%, transparent) !important;
+  }
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--mat-sys-primary), var(--mat-sys-tertiary));
+  color: var(--mat-sys-on-primary);
+}
+
+.avatar-initials {
+  color: var(--mat-sys-on-primary);
+}
+
+.user-details {
+  .display-name {
+    color: var(--mat-sys-on-surface);
+  }
+  .email-address {
+    color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 75%, transparent);
+  }
+}
+
+// Profile Dropdown Menu customization (via Angular Material overlay)
+::ng-deep .profile-menu-panel {
+  background: color-mix(in srgb, var(--mat-sys-surface-container) 95%, transparent) !important;
+  border: 1px solid var(--mat-sys-outline-variant) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--mat-sys-shadow) 12%, transparent) !important;
+
+  .mat-mdc-menu-content {
+    padding: 8px 0 !important;
+  }
+
+  button.mat-mdc-menu-item {
+    font-family: inherit;
+    font-weight: 500 !important;
+    color: var(--mat-sys-on-surface-variant) !important;
+
+    .mat-icon {
+      color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 70%, transparent) !important;
+    }
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent) !important;
+      color: var(--mat-sys-on-surface) !important;
+
+      .mat-icon {
+        color: var(--mat-sys-on-surface) !important;
+      }
+    }
+
+    &.logout-menu-item {
+      color: var(--mat-sys-error) !important;
+
+      .mat-icon {
+        color: var(--mat-sys-error) !important;
+      }
+
+      &:hover {
+        background-color: color-mix(in srgb, var(--mat-sys-error-container) 40%, transparent) !important;
+      }
+    }
+  }
+}
+
+// Mobile bottom navigation docking
+.mobile-nav {
+  background: color-mix(in srgb, var(--mat-sys-surface-container) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 40%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--mat-sys-shadow) 12%, transparent);
+}
+
+.mobile-nav-btn {
+  color: var(--mat-sys-on-surface-variant);
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--mat-sys-on-surface) 8%, transparent);
+  }
+}
+
+.mobile-nav-active {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary) !important;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--mat-sys-primary) 30%, transparent);
+  transform: scale(1.1);
+}
+
+.mobile-nav-inactive {
+  color: color-mix(in srgb, var(--mat-sys-on-surface-variant) 70%, transparent);
+}

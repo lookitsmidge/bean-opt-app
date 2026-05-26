@@ -15,7 +15,16 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "@boa/core-ui": ["./libs/core/ui/src/index.ts"]
+      "@boa/core-ui": ["./libs/core/ui/src/index.ts"],
+      "@boa/infra-util": ["./libs/infra/util/src/index.ts"],
+      "@boa/infra-supabase": ["./libs/infra/supabase/src/index.ts"],
+      "@boa/features-dashboard": ["./libs/features/dashboard/src/index.ts"],
+      "@boa/core-auth-domain": ["./libs/core/auth/domain/src/index.ts"],
+      "@boa/core-auth-domain/testing": ["./libs/core/auth/domain/src/testing/index.ts"],
+      "@boa/core-auth-application": ["./libs/core/auth/application/src/index.ts"],
+      "@boa/core-auth-data-access": ["./libs/core/auth/data-access/src/index.ts"],
+      "@boa/core-auth-feature": ["./libs/core/auth/feature/src/index.ts"],
+      "@boa/core-auth-ui": ["./libs/core/auth/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

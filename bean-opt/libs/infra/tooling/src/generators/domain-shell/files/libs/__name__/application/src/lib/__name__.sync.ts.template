@@ -1,0 +1,28 @@
+import { patchState, signalStoreFeature, type, withHooks } from "@ngrx/signals";
+import { inject } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { <%= className %>State } from "./<%= fileName %>.store";
+import { <%= constantName %>_REPOSITORY_TOKEN } from "@wfi/<%= fileName %>/domain";
+
+export function with<%= className %>Sync() {
+    return signalStoreFeature(
+        { state: type<<%= className %>State>() },
+        withHooks({
+            onInit(store, repo = inject(<%= constantName %>_REPOSITORY_TOKEN)) {
+                repo.get<%= className %>s().pipe(takeUntilDestroyed()).subscribe({
+                    next: (items) => {
+                        patchState(store, {
+                            items,
+                            loading: false,
+                            error: null
+                        });
+                    },
+                    error: (error) => {
+                        console.error('<%= className %> sync error:', error);
+                        patchState(store, { loading: false, error: error.message });
+                    }
+                });
+            }
+        })
+    );
+}

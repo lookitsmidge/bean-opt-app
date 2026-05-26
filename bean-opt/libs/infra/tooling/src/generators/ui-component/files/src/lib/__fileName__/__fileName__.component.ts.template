@@ -1,0 +1,15 @@
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'lib-<%= fileName %>',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './<%= fileName %>.component.html',
+  styleUrls: ['./<%= fileName %>.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class <%= className %>Component {
+  // Input example: name = input<string>('');
+  // Output example: clicked = output<void>();
+}

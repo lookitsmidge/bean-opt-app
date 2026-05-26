@@ -1,0 +1,10 @@
+import { Routes } from '@angular/router';
+
+export const <%= propertyName %>Routes: Routes = [
+  {
+    path: '',
+    children: [
+        // { path: '', component: <%= className %>ListComponent },
+    ]
+  },
+];

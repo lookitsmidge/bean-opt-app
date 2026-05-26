@@ -1,0 +1,31 @@
+import { patchState, signalStoreFeature, type, withMethods } from "@ngrx/signals";
+import { inject } from "@angular/core";
+import { <%= className %>State } from "./<%= fileName %>.store";
+import { <%= className %> } from "@wfi/<%= fileName %>/domain";
+import { <%= constantName %>_REPOSITORY_TOKEN } from "@wfi/<%= fileName %>/domain";
+
+export function with<%= className %>Commands() {
+    return signalStoreFeature(
+        { state: type<<%= className %>State>() },
+        withMethods((store, repo = inject(<%= constantName %>_REPOSITORY_TOKEN)) => ({
+            async add<%= className %>(item: <%= className %>) {
+                try {
+                    patchState(store, { loading: true, error: null });
+                    await repo.save<%= className %>(item);
+                } catch (e: any) {
+                    patchState(store, { loading: false, error: e.message });
+                    throw e;
+                }
+            },
+            async delete<%= className %>(id: string) {
+                try {
+                    patchState(store, { loading: true, error: null });
+                    await repo.delete<%= className %>(id);
+                } catch (e: any) {
+                    patchState(store, { loading: false, error: e.message });
+                    throw e;
+                }
+            }
+        }))
+    );
+}

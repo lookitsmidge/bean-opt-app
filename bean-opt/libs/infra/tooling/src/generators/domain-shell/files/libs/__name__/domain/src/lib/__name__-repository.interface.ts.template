@@ -1,0 +1,9 @@
+import { Observable } from "rxjs";
+import { <%= className %> } from "./<%= fileName %>.model";
+
+export interface I<%= className %>Repository {
+    get<%= className %>s(): Observable<<%= className %>[]>;
+    get<%= className %>ById(id: string): Observable<<%= className %> | null>;
+    save<%= className %>(item: <%= className %>): Promise<void>;
+    delete<%= className %>(id: string): Promise<void>;
+}

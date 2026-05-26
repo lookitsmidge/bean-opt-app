@@ -41,4 +41,84 @@ body {
   margin: 0;
   height: 100%;
 }
+
+/* Theme overrides for native HTML elements */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--mat-sys-on-surface);
+  font-family: var(--mat-sys-headline-large-font), inherit;
+  margin-top: 0;
+}
+
+h1 {
+  font-size: var(--mat-sys-headline-large-size);
+  font-weight: var(--mat-sys-headline-large-weight);
+  line-height: var(--mat-sys-headline-large-line-height);
+  letter-spacing: var(--mat-sys-headline-large-tracking);
+}
+
+h2 {
+  font-size: var(--mat-sys-headline-medium-size);
+  font-weight: var(--mat-sys-headline-medium-weight);
+  line-height: var(--mat-sys-headline-medium-line-height);
+  letter-spacing: var(--mat-sys-headline-medium-tracking);
+}
+
+h3 {
+  font-size: var(--mat-sys-title-large-size);
+  font-weight: var(--mat-sys-title-large-weight);
+  line-height: var(--mat-sys-title-large-line-height);
+  letter-spacing: var(--mat-sys-title-large-tracking);
+}
+
+h4 {
+  font-size: var(--mat-sys-title-medium-size);
+  font-weight: var(--mat-sys-title-medium-weight);
+  line-height: var(--mat-sys-title-medium-line-height);
+  letter-spacing: var(--mat-sys-title-medium-tracking);
+}
+
+h5 {
+  font-size: var(--mat-sys-title-small-size);
+  font-weight: var(--mat-sys-title-small-weight);
+  line-height: var(--mat-sys-title-small-line-height);
+  letter-spacing: var(--mat-sys-title-small-tracking);
+}
+
+h6 {
+  font-size: var(--mat-sys-label-large-size);
+  font-weight: var(--mat-sys-label-large-weight);
+  line-height: var(--mat-sys-label-large-line-height);
+  letter-spacing: var(--mat-sys-label-large-tracking);
+}
+
+p {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: var(--mat-sys-body-medium-size);
+  font-weight: var(--mat-sys-body-medium-weight);
+  line-height: var(--mat-sys-body-medium-line-height);
+  letter-spacing: var(--mat-sys-body-medium-tracking);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+span {
+  color: inherit;
+  font-family: inherit;
+}
+
+sub, sup {
+  font-size: var(--mat-sys-body-small-size);
+  font-weight: var(--mat-sys-body-small-weight);
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
 /* You can add global styles to this file, and also import other style files */

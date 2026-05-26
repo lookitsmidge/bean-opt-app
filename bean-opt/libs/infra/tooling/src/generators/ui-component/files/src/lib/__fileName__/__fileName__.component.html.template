@@ -1,0 +1,28 @@
+<!-- Nook Style Component -->
+<section 
+  class="bg-white rounded-[2rem] border border-slate-100 p-6 shadow-sm active:scale-95 transition-all duration-300 hover:shadow-xl cursor-pointer"
+>
+  <header>
+    <h3 class="text-xs md:text-sm font-black uppercase tracking-wide text-slate-900 leading-tight">
+      <%= className %> Component
+    </h3>
+    <p class="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-1.5">
+      WFi Premium Component
+    </p>
+  </header>
+
+  <div class="mt-4 pt-4 border-t border-slate-100">
+    <!-- Component Content -->
+    <ng-content></ng-content>
+  </div>
+  
+  <footer class="mt-4 flex justify-end">
+    <button 
+      class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center hover:bg-indigo-600 active:scale-90 transition-all shadow-lg shadow-slate-900/20"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+      </svg>
+    </button>
+  </footer>
+</section>

@@ -13,7 +13,7 @@ This document provides a high-level overview of the project's progress, categori
 _Goal: Enterprise performance at hobbyist costs._
 
 **User Story: High-Performance Security**
-- `[ ]` Implement JWT Sync trigger: to sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks`
+- `[/]` Implement JWT Sync trigger: to sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks`
 
 ## Feature 1: Authentication & User Governance
 
@@ -65,12 +65,13 @@ _to be completed in time_
 
 ## Next Session (Handoff Log)
 
-- **Title here**: description here
-
+- **Auth Schema & Library Refactoring Completed**: Database schema was simplified to remove deprecated columns (`visibility`, `is_verified`, `subscription_tier`, `social_links`). JWT role check helper functions (`public.authorize`, `public.is_admin`, `public.is_moderator`) were implemented, and RLS policies on `profiles` were simplified to be owner-restricted. Frontend auth libraries were updated, and all 91 unit tests are passing.
 
 ## Immediate Next Steps:
 
-1. **Name here**: description here
-
+1. **Apply DB Migrations**: Run `npx supabase db reset` to apply the migrations to the local Supabase container.
+2. **Connect Auth Library to Application**: Register `SupabaseAuthRepository` and `SupabaseProfileRepository` (from `@boa/core-auth-data-access`) in `app.config.ts`.
+3. **Route Protection**: Implement and configure the Route Guards (`AuthGuard`) to restrict unauthenticated access to the Home/Landing page only.
+4. **Header Navigation & Auth Buttons**: Implement the "Log In" trigger component in place of the floating profile icon when a user is not authenticated.
 
 ## Backlog: (to be split out)

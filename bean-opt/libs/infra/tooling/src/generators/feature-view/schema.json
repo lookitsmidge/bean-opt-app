@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "FeatureView",
+  "title": "WFi Feature View",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the view (e.g. list, detail)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the view name? (e.g. figure-list)"
+    },
+    "project": {
+      "type": "string",
+      "description": "The feature library project (e.g. auth-feature)",
+      "x-prompt": "Which feature library should this belong to?"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain name for store injection (e.g. auth, league)",
+      "x-prompt": "What is the domain name for Signal Store injection?"
+    }
+  },
+  "required": ["name", "project", "domain"]
+}

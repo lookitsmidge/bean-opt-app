@@ -1,0 +1,15 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { <%= domainClassName %>Store } from '@wfi/<%= domainFileName %>/application';
+
+@Component({
+  selector: 'lib-<%= fileName %>',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './<%= fileName %>.component.html',
+  styleUrls: ['./<%= fileName %>.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class <%= className %>Component {
+  readonly store = inject(<%= domainClassName %>Store);
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "DataRepository",
+  "title": "WFi Data Repository",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The domain name (e.g. auth, league)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the domain name for the repository?"
+    },
+    "project": {
+      "type": "string",
+      "description": "The data-access project (e.g. auth/data-access)",
+      "x-prompt": "Which data-access library should this belong to?"
+    },
+    "type": {
+      "type": "string",
+      "description": "The infrastructure type",
+      "enum": ["firebase", "supabase"],
+      "default": "firebase",
+      "x-prompt": "Which infrastructure implementation (firebase/supabase)?"
+    }
+  },
+  "required": ["name", "project", "type"]
+}

@@ -1,0 +1,4 @@
+export * from './lib/<%= fileName %>.model';
+export * from './lib/<%= fileName %>-repository.interface';
+export * from './lib/repository.token';
+export * from './lib/testing/<%= fileName %>-repository.mock';

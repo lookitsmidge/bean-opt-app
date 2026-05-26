@@ -1,0 +1,29 @@
+{
+  "generators": {
+    "domain-shell": {
+      "factory": "./src/generators/domain-shell/generator",
+      "schema": "./src/generators/domain-shell/schema.json",
+      "description": "domain-shell generator"
+    },
+    "ui-component": {
+      "factory": "./src/generators/ui-component/generator",
+      "schema": "./src/generators/ui-component/schema.json",
+      "description": "ui-component generator"
+    },
+    "feature-view": {
+      "factory": "./src/generators/feature-view/generator",
+      "schema": "./src/generators/feature-view/schema.json",
+      "description": "feature-view generator"
+    },
+    "data-repository": {
+      "factory": "./src/generators/data-repository/generator",
+      "schema": "./src/generators/data-repository/schema.json",
+      "description": "data-repository generator"
+    },
+    "signal-store-feature": {
+      "factory": "./src/generators/signal-store-feature/generator",
+      "schema": "./src/generators/signal-store-feature/schema.json",
+      "description": "signal-store-feature generator"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "UiComponent",
+  "title": "Nook UI Component",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the component",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the component name? (e.g. figure-card)"
+    },
+    "project": {
+      "type": "string",
+      "description": "The project where the component should be created",
+      "x-prompt": "Which UI library should this belong to? (e.g. shared-ui, auth-ui)"
+    }
+  },
+  "required": ["name", "project"]
+}

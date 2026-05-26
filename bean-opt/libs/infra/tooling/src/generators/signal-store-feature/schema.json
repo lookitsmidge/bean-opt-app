@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "SignalStoreFeature",
+  "title": "NgRx Signal Store Feature",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the feature (e.g. with-pagination, with-filtering)",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What is the feature name? (e.g. with-filtering)"
+    },
+    "project": {
+      "type": "string",
+      "description": "The library project (e.g. shared/util, auth/application)",
+      "x-prompt": "Which library should this belong to?"
+    }
+  },
+  "required": ["name", "project"]
+}

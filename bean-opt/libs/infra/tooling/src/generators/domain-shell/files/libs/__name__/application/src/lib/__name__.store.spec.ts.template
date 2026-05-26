@@ -1,0 +1,23 @@
+import { TestBed } from '@angular/core/testing';
+import { <%= className %>Store } from './<%= fileName %>.store';
+import { <%= constantName %>_REPOSITORY_TOKEN, <%= className %>RepositoryMock } from '@wfi/<%= fileName %>/domain';
+
+describe('<%= className %>Store', () => {
+  let store: any;
+  let repoMock: <%= className %>RepositoryMock;
+
+  beforeEach(() => {
+    repoMock = new <%= className %>RepositoryMock();
+    TestBed.configureTestingModule({
+      providers: [
+        <%= className %>Store,
+        { provide: <%= constantName %>_REPOSITORY_TOKEN, useValue: repoMock }
+      ]
+    });
+    store = TestBed.inject(<%= className %>Store);
+  });
+
+  it('should be created', () => {
+    expect(store).toBeTruthy();
+  });
+});

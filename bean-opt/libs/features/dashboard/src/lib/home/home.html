@@ -1,0 +1,225 @@
+<div class="dashboard-wrapper space-y-8 animate-fade-in-up">
+  
+  <!-- Hero Welcome Header -->
+  <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 py-2 border-b border-solid border-slate-100">
+    <div>
+      <h1 class="text-3xl font-black italic tracking-tight uppercase mb-1">
+        Welcome back, <span class="text-primary">{{ user().displayName }}</span>
+      </h1>
+      <p class="text-sm text-slate-500 m-0">Let's dial in the perfect extraction today.</p>
+    </div>
+    
+    <!-- Quick Date/Time Indicator -->
+    <div class="date-badge flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider">
+      <mat-icon class="text-sm">calendar_today</mat-icon>
+      <span>{{ today | date:'mediumDate' }}</span>
+    </div>
+  </header>
+
+  <!-- Key Metrics / Stats Row -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    <mat-card class="stat-card p-5 border-none shadow-sm flex flex-col justify-between transition-all duration-300">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Total Shots</span>
+        <div class="icon-circle bg-primary-light flex items-center justify-center w-10 h-10 rounded-xl">
+          <mat-icon class="text-primary">coffee</mat-icon>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-3xl font-extrabold m-0">{{ totalShots() }}</h3>
+        <span class="text-xs text-emerald-500 font-semibold flex items-center gap-1 mt-1">
+          <mat-icon class="text-xs">trending_up</mat-icon> +4 this week
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card p-5 border-none shadow-sm flex flex-col justify-between transition-all duration-300">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Active Beans</span>
+        <div class="icon-circle bg-tertiary-light flex items-center justify-center w-10 h-10 rounded-xl">
+          <mat-icon class="text-tertiary">local_cafe</mat-icon>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-3xl font-extrabold m-0">{{ activeBeansCount() }}</h3>
+        <span class="text-xs text-slate-500 font-semibold flex items-center gap-1 mt-1">
+          In the hopper
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card p-5 border-none shadow-sm flex flex-col justify-between transition-all duration-300">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Avg Extraction</span>
+        <div class="icon-circle bg-accent-light flex items-center justify-center w-10 h-10 rounded-xl">
+          <mat-icon class="text-accent">timer</mat-icon>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-3xl font-extrabold m-0">{{ avgExtractionTime() }}s</h3>
+        <span class="text-xs text-emerald-500 font-semibold flex items-center gap-1 mt-1">
+          Target range (25-30s)
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card p-5 border-none shadow-sm flex flex-col justify-between transition-all duration-300">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Average Rating</span>
+        <div class="icon-circle bg-warn-light flex items-center justify-center w-10 h-10 rounded-xl">
+          <mat-icon class="text-warn">star</mat-icon>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-3xl font-extrabold m-0">{{ averageRating() }} ★</h3>
+        <span class="text-xs text-emerald-500 font-semibold flex items-center gap-1 mt-1">
+          High quality extraction
+        </span>
+      </div>
+    </mat-card>
+
+  </section>
+
+  <!-- Quick Actions Grid -->
+  <section class="space-y-4">
+    <h2 class="text-lg font-black uppercase tracking-widest italic text-slate-700">Quick Actions</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      
+      <button routerLink="/runs/new" class="action-card group flex items-center gap-4 p-5 rounded-[2rem] text-left border-none cursor-pointer transition-all duration-300">
+        <div class="action-icon-box w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+          <mat-icon>play_circle</mat-icon>
+        </div>
+        <div>
+          <h4 class="font-extrabold text-base m-0 transition-colors group-hover:text-primary">Log New Shot</h4>
+          <span class="text-xs text-slate-400">Record dosage & extraction time</span>
+        </div>
+      </button>
+
+      <button routerLink="/optimizations" class="action-card group flex items-center gap-4 p-5 rounded-[2rem] text-left border-none cursor-pointer transition-all duration-300">
+        <div class="action-icon-box w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+          <mat-icon>auto_awesome</mat-icon>
+        </div>
+        <div>
+          <h4 class="font-extrabold text-base m-0 transition-colors group-hover:text-primary">Shot Doctor</h4>
+          <span class="text-xs text-slate-400">Diagnose shot issues & optimize</span>
+        </div>
+      </button>
+
+      <button routerLink="/beans" class="action-card group flex items-center gap-4 p-5 rounded-[2rem] text-left border-none cursor-pointer transition-all duration-300">
+        <div class="action-icon-box w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </div>
+        <div>
+          <h4 class="font-extrabold text-base m-0 transition-colors group-hover:text-primary">Add Coffee Beans</h4>
+          <span class="text-xs text-slate-400">Register new roasts & bags</span>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- Two-Column Layout: Recent Log & Active Hopper Beans -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    
+    <!-- Left Column: Recent Extraction Logs -->
+    <section class="lg:col-span-2 space-y-4">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-black uppercase tracking-widest italic text-slate-700 m-0">Recent Extractions</h2>
+        <button mat-button color="primary" routerLink="/readings" class="text-xs uppercase tracking-wider font-extrabold">View History</button>
+      </div>
+
+      <div class="space-y-4">
+        @for (shot of recentShots(); track shot.id) {
+          <mat-card class="shot-log-card p-5 border-none shadow-sm flex flex-col md:flex-row justify-between gap-4 transition-all duration-300">
+            <!-- Bean and Roaster Details -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <h4 class="text-base font-extrabold truncate m-0">{{ shot.beanName }}</h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-slate-100 text-slate-500">Grind: {{ shot.grindSetting }}</span>
+              </div>
+              <p class="text-xs text-slate-400 mb-2 truncate">{{ shot.roaster }}</p>
+              
+              <!-- Tasting Notes Box -->
+              <div class="taste-notes-box px-3 py-2.5 rounded-xl border border-solid border-slate-50 text-xs italic text-slate-600">
+                "{{ shot.tasteNotes }}"
+              </div>
+            </div>
+
+            <!-- Parameters and Rating details -->
+            <div class="flex md:flex-col justify-between items-end md:text-right shrink-0 gap-3 border-t md:border-t-0 md:border-l border-solid border-slate-100 pt-3 md:pt-0 md:pl-4">
+              <!-- Parameters -->
+              <div>
+                <div class="text-sm font-black italic tracking-tighter">
+                  {{ shot.gramsIn }}g <span class="text-slate-400 font-normal">➔</span> {{ shot.gramsOut }}g
+                </div>
+                <div class="text-xs text-slate-400 mt-0.5">in {{ shot.extractionTime }}s</div>
+              </div>
+
+              <!-- Rating stars -->
+              <div class="flex gap-0.5 text-amber-400">
+                @for (star of getStars(shot.rating); track $index) {
+                  <mat-icon class="text-lg">star</mat-icon>
+                }
+                @if (hasHalfStar(shot.rating)) {
+                  <mat-icon class="text-lg">star_half</mat-icon>
+                }
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+    </section>
+
+    <!-- Right Column: Hopper Beans -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-black uppercase tracking-widest italic text-slate-700 m-0">In The Hopper</h2>
+      
+      <div class="space-y-4">
+        @for (bean of activeBeans(); track bean.id) {
+          <mat-card class="bean-card p-5 border-none shadow-sm flex flex-col justify-between transition-all duration-300">
+            <div>
+              <div class="flex justify-between items-start mb-1">
+                <h4 class="text-base font-extrabold m-0">{{ bean.name }}</h4>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider roast-badge" [attr.data-roast]="bean.roastLevel">
+                  {{ bean.roastLevel }}
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mb-3">{{ bean.roaster }}</p>
+              
+              <div class="space-y-2 mb-4 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Roast Date:</span>
+                  <span class="font-semibold">{{ bean.roastDate | date:'mediumDate' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Grind Range:</span>
+                  <span class="font-semibold">{{ bean.grindRange }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400 font-semibold text-primary">Notes:</span>
+                  <span class="italic text-slate-600 truncate max-w-[150px]">{{ bean.notes }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remaining Grams / Weight tracker -->
+            <div class="pt-3 border-t border-solid border-slate-100 flex items-center justify-between">
+              <span class="text-xs text-slate-400">Remaining:</span>
+              <div class="flex items-center gap-1.5">
+                <div class="w-16 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-primary h-full" [style.width.%]="(bean.remainingGrams / 250) * 100"></div>
+                </div>
+                <span class="text-xs font-black">{{ bean.remainingGrams }}g</span>
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+

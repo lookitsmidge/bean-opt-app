@@ -1,0 +1,33 @@
+{
+  "name": "infra-supabase",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "supabase",
+  "targets": {
+    "status": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx supabase status"
+      }
+    },
+    "db-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx supabase db pull"
+      }
+    },
+    "db-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx supabase db push"
+      }
+    },
+    "gen-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx supabase gen types typescript --local > libs/infra/util/src/lib/supabase/database.types.ts"
+      }
+    }
+  },
+  "tags": ["domain:infra", "type:database"]
+}

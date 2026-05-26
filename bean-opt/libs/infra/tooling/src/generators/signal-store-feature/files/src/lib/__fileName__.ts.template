@@ -1,0 +1,22 @@
+import { signalStoreFeature, withMethods, withState } from '@ngrx/signals';
+
+export interface <%= className %>State {
+  // Define feature state here
+  query: string;
+}
+
+const initialState: <%= className %>State = {
+  query: '',
+};
+
+export function <%= propertyName %>() {
+  return signalStoreFeature(
+    withState(initialState),
+    withMethods((store) => ({
+      // Define feature methods here
+      updateQuery(query: string) {
+        // patchState(store, { query });
+      },
+    }))
+  );
+}

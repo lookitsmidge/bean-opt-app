@@ -1,0 +1,75 @@
+<div class="relative w-full">
+    <!-- Trigger Slot -->
+    <div (click)="toggleMenu($event)" 
+         class="cursor-pointer outline-none w-full" 
+         role="button" 
+         tabindex="0">
+        <ng-content></ng-content>
+    </div>
+
+    <!-- Dropdown Menu (Glassmorphic) -->
+    @if (isOpen()) {
+        <div [class.right-0]="align() === 'right'"
+             [class.left-0]="align() === 'left'"
+             [class.bottom-full]="align() === 'top'"
+             [class.mb-4]="align() === 'top'"
+             [class.mt-4]="align() !== 'top'"
+             class="absolute w-64 bg-white/90 lg:bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-white/80 lg:border-white/60 py-5 z-[150] animate-in fade-in zoom-in-95 duration-300 origin-bottom overflow-hidden">
+            
+
+            <div class="flex flex-col px-2">
+                @if (user() && !user()?.isAnonymous) {
+                    <a routerLink="/auth/profile" (click)="closeMenu()" 
+                       class="flex items-center gap-4 px-6 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-slate-700 hover:bg-white/60 hover:text-indigo-600 rounded-2xl transition-all italic group">
+                        <span class="p-2 rounded-xl bg-indigo-500/10 text-indigo-600 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        View Profile
+                    </a>
+                    
+                    <a routerLink="/auth/settings" (click)="closeMenu()" 
+                       class="flex items-center gap-4 px-6 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-slate-700 hover:bg-white/60 hover:text-indigo-600 rounded-2xl transition-all italic group">
+                        <span class="p-2 rounded-xl bg-slate-500/10 text-slate-600 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </span>
+                        Settings
+                    </a>
+
+                    @if (showAdminToggle()) {
+                        <button (click)="adminToggleRequested.emit()" 
+                           class="flex items-center gap-4 px-6 py-4 text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl transition-all italic group border-none bg-transparent w-full text-left cursor-pointer"
+                           [class.text-indigo-600]="isAdminModeActive()"
+                           [class.text-slate-700]="!isAdminModeActive()">
+                            <span class="p-2 rounded-xl transition-all"
+                                  [class.bg-indigo-500]="isAdminModeActive()"
+                                  [class.text-white]="isAdminModeActive()"
+                                  [class.bg-slate-500/10]="!isAdminModeActive()"
+                                  [class.text-slate-600]="!isAdminModeActive()"
+                                  [class.group-hover:bg-indigo-500]="true"
+                                  [class.group-hover:text-white]="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+                            </span>
+                            {{ isAdminModeActive() ? 'Disable Admin' : 'Enable Admin' }}
+                        </button>
+                    }
+                } @else {
+                    <div class="px-6 py-4">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase leading-relaxed tracking-wider">
+                            Sync your collection to unlock profile features.
+                        </p>
+                    </div>
+                }
+
+                <div class="h-px bg-white/40 my-3 mx-6"></div>
+
+                <button (click)="onLogout()" 
+                        class="flex items-center gap-4 px-6 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-rose-500 hover:bg-rose-50 rounded-2xl transition-all italic group border-none bg-transparent w-full text-left cursor-pointer">
+                    <span class="p-2 rounded-xl bg-rose-500/10 text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                    </span>
+                    Terminate Session
+                </button>
+            </div>
+        </div>
+    }
+</div>

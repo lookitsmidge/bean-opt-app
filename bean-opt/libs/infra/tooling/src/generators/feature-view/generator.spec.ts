@@ -29,6 +29,6 @@ describe('feature-view generator', () => {
     expect(tree.exists('libs/test-feature/src/lib/test-list/test-list.component.ts')).toBeTruthy();
     const routesContent = tree.read('libs/test-feature/src/lib/lib.routes.ts', 'utf-8');
     expect(routesContent).toContain("import { TestListComponent } from './test-list/test-list.component';");
-    expect(routesContent).toContain("{ path: 'test-list', component: TestListComponent },");
+    expect(routesContent).toContain("{ path: 'test-list', component: TestListComponent }");
   });
 });

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { <%= className %>Store } from './<%= fileName %>.store';
-import { <%= constantName %>_REPOSITORY_TOKEN, <%= className %>RepositoryMock } from '@wfi/<%= fileName %>/domain';
+import { <%= constantName %>_REPOSITORY_TOKEN, <%= className %>RepositoryMock } from '@boa/<%= fileName %>/domain';
 
 describe('<%= className %>Store', () => {
   let store: any;

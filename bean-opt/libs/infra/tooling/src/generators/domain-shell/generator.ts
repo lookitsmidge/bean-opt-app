@@ -5,6 +5,8 @@ import {
   names,
   Tree,
   runTasksInSerial,
+  readProjectConfiguration,
+  updateProjectConfiguration,
 } from '@nx/devkit';
 import { libraryGenerator } from '@nx/angular/generators';
 import * as path from 'path';
@@ -21,7 +23,7 @@ export async function domainShellGenerator(
   for (const tier of tiers) {
     const projectName = `${fileName}-${tier}`;
     const projectRoot = `libs/${fileName}/${tier}`;
-    const importPath = `@wfi/${fileName}/${tier}`;
+    const importPath = `@boa/${fileName}/${tier}`;
 
     // Skip if library already exists
     const projects = getProjects(tree);
@@ -36,11 +38,24 @@ export async function domainShellGenerator(
       standalone: true,
       strict: true,
       linter: 'eslint',
-      unitTestRunner: (tier === 'domain' || tier === 'ui' ? 'none' : 'jest') as any,
+      unitTestRunner: (tier === 'domain' || tier === 'ui' ? 'none' : 'vitest-analog') as any,
       tags: `scope:${fileName},type:${tier}`,
       skipFormat: true,
     });
     tasks.push(libTask);
+
+    if (tier !== 'domain' && tier !== 'ui') {
+      const projectConfig = readProjectConfiguration(tree, projectName);
+      projectConfig.targets = projectConfig.targets || {};
+      projectConfig.targets.test = {
+        executor: '@nx/vitest:test',
+        outputs: [`{workspaceRoot}/coverage/${projectRoot}`],
+        options: {
+          config: `${projectRoot}/vite.config.mts`,
+        },
+      };
+      updateProjectConfiguration(tree, projectName, projectConfig);
+    }
 
     // Clean up default generated files in src/lib
     const libPath = `${projectRoot}/src/lib`;

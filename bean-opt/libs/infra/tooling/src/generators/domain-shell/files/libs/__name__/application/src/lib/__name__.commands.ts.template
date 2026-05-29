@@ -1,8 +1,8 @@
 import { patchState, signalStoreFeature, type, withMethods } from "@ngrx/signals";
 import { inject } from "@angular/core";
 import { <%= className %>State } from "./<%= fileName %>.store";
-import { <%= className %> } from "@wfi/<%= fileName %>/domain";
-import { <%= constantName %>_REPOSITORY_TOKEN } from "@wfi/<%= fileName %>/domain";
+import { <%= className %> } from "@boa/<%= fileName %>/domain";
+import { <%= constantName %>_REPOSITORY_TOKEN } from "@boa/<%= fileName %>/domain";
 
 export function with<%= className %>Commands() {
     return signalStoreFeature(

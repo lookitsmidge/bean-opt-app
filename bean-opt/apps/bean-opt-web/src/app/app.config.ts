@@ -10,9 +10,15 @@ import { appRoutes } from './app.routes';
 import { APP_CONFIG } from '@boa/infra-util';
 import { environment } from '../environments/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { AUTH_REPOSITORY_TOKEN, PROFILE_REPOSITORY_TOKEN } from '@boa/core-auth-domain';
+import { SupabaseAuthRepository, SupabaseProfileRepository } from '@boa/core-auth-data-access';
+import { ESPRESSO_READING_REPOSITORY_TOKEN } from '@boa/features/readings/domain';
+import { SupabaseEspressoReadingRepository } from '@boa/features/readings/data-access';
 
 const serviceProviders: (Provider | EnvironmentProviders)[] = [
-  
+  { provide: AUTH_REPOSITORY_TOKEN, useClass: SupabaseAuthRepository },
+  { provide: PROFILE_REPOSITORY_TOKEN, useClass: SupabaseProfileRepository },
+  { provide: ESPRESSO_READING_REPOSITORY_TOKEN, useClass: SupabaseEspressoReadingRepository },
 ];
 
 export const appConfig: ApplicationConfig = {

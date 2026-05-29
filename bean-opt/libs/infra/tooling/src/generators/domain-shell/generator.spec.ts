@@ -15,7 +15,7 @@ describe('domain-shell generator', () => {
   // Skip this test in this environment because libraryGenerator internally calls formatFiles
   // which fails with "A dynamic import callback was invoked without --experimental-vm-modules"
   // in the Jest/Nx virtual tree environment.
-  xit('should run successfully and create all tiers', async () => {
+  it.skip('should run successfully and create all tiers', async () => {
     await domainShellGenerator(tree, options);
     
     // Check projects exist

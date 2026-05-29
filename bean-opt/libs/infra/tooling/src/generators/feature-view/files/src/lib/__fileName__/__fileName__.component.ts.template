@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { <%= domainClassName %>Store } from '@wfi/<%= domainFileName %>/application';
+import { <%= domainClassName %>Store } from '@boa/<%= domainFileName %>/application';
 
 @Component({
   selector: 'lib-<%= fileName %>',

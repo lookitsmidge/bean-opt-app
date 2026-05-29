@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Observable, from, map } from "rxjs";
-import { <%= className %>, I<%= className %>Repository } from "@wfi/<%= fileName %>/domain";
-// import { SupabaseService } from "@wfi/shared/util";
+import { <%= className %>, I<%= className %>Repository } from "@boa/<%= fileName %>/domain";
+// import { SupabaseService } from "@boa/infra-util";
 
 @Injectable({ providedIn: 'root' })
 export class Supabase<%= className %>Repository implements I<%= className %>Repository {

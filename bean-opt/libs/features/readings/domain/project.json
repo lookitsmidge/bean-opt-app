@@ -1,0 +1,13 @@
+{
+  "name": "features/readings-domain",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/features/readings/domain/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:features/readings", "type:domain"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -13,7 +13,7 @@ This document provides a high-level overview of the project's progress, categori
 _Goal: Enterprise performance at hobbyist costs._
 
 **User Story: High-Performance Security**
-- `[/]` Implement JWT Sync trigger: to sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks`
+- `[x]` Implement JWT Sync trigger: to sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks`
 
 ## Feature 1: Authentication & User Governance
 
@@ -42,13 +42,14 @@ _Goal: Enterprise performance at hobbyist costs._
   - bean brands
   - store recommended ranges for these beans and any grind size settings you have found or workflows
 
-## Feature: Run Management
+## Feature: Run Management (Espresso Tracking)
 - **User Story: Record a run**
-  - in-built timer
-  - double/single toggle 
-  - grams in 
-  - grams out 
-  - readout and shot mapping (plot it and ask for taste feedback).
+  - `[x]` in-built timer (fully integrated with Angular Signals stopwatch UI)
+  - `[ ]` Support manual entry of extraction time (as an alternative to the interactive stopwatch timer)
+  - `[ ]` double/single toggle 
+  - `[x]` grams in (coffee mass logs)
+  - `[x]` grams out (water yield logs)
+  - `[ ]` readout and shot mapping (plot it and ask for taste feedback).
 
 ## Shot Diagnosis Tool
 - **User Story: Shot Doctor diagnosis tool**
@@ -61,17 +62,25 @@ _to be completed in time_
 
 ## Summary of Completion
 
-_to be completed in time_
+- **Auth Security & RLS**: Configured JWT claim synchronisation to enable join-free RLS checks. Restricted profile accessibility to owners.
+- **Readings Feature Scaffold**: Created four DDD-tiered libraries under `libs/features/readings` for espresso logging. Applied migration for the `espresso_readings` table and set up RLS policies.
+- **Scaffolding Tooling Migration**: Converted the code generator workspace libraries scaffolding mechanism from Jest to Vitest (`vitest-analog`). Configured automatic explicit `@nx/vitest:test` targets generation.
+- **Testing Alignment**: Successfully migrated all readings libraries, tooling project configuration files, and unit tests to Vitest. All test suites pass successfully.
 
 ## Next Session (Handoff Log)
 
-- **Auth Schema & Library Refactoring Completed**: Database schema was simplified to remove deprecated columns (`visibility`, `is_verified`, `subscription_tier`, `social_links`). JWT role check helper functions (`public.authorize`, `public.is_admin`, `public.is_moderator`) were implemented, and RLS policies on `profiles` were simplified to be owner-restricted. Frontend auth libraries were updated, and all 91 unit tests are passing.
+- **Ready for UI & Shell Hooks**: All foundations, database migrations, types generation, and testing configurations are active and compiling cleanly under production configurations. The Readings Feature has a functional UI with stopwatch timer inputs, awaiting routing hookups to the main shell.
 
 ## Immediate Next Steps:
 
-1. **Apply DB Migrations**: Run `npx supabase db reset` to apply the migrations to the local Supabase container.
-2. **Connect Auth Library to Application**: Register `SupabaseAuthRepository` and `SupabaseProfileRepository` (from `@boa/core-auth-data-access`) in `app.config.ts`.
-3. **Route Protection**: Implement and configure the Route Guards (`AuthGuard`) to restrict unauthenticated access to the Home/Landing page only.
-4. **Header Navigation & Auth Buttons**: Implement the "Log In" trigger component in place of the floating profile icon when a user is not authenticated.
+1. **Routing Shell Integration**: Link up the `READINGS_ROUTES` path to the main application navigation menu.
+2. **Header Navigation & Auth Buttons**: Connect the route guards (`AuthGuard`) and configure the header navigation/auth login triggers.
+3. **Bean Selection**: Integrate coffee bean selection within the espresso logging readings panel.
 
-## Backlog: (to be split out)
+## Backlog:
+
+- **Espresso Readings Enhancements**:
+  - Allow user to select which coffee bean they used for the extraction.
+  - Allow user to configure their setup, add multiple setups, and select a setup when performing a reading (defaulting to the last one used).
+  - Allow user to rate their espresso shot out of 5 stars.
+  - Allow user to rate shot extraction quality via a sliding acidity/burned scale (under-extracted - gold zone - over-extracted).

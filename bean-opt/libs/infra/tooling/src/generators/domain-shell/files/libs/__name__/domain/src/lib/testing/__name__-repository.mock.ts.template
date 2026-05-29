@@ -1,9 +1,11 @@
+import { vi } from 'vitest';
 import { of } from "rxjs";
 import { I<%= className %>Repository } from "../<%= fileName %>-repository.interface";
 
 export class <%= className %>RepositoryMock implements I<%= className %>Repository {
-    get<%= className %>s = jest.fn().mockReturnValue(of([]));
-    get<%= className %>ById = jest.fn().mockReturnValue(of(null));
-    save<%= className %> = jest.fn().mockResolvedValue(undefined);
-    delete<%= className %> = jest.fn().mockResolvedValue(undefined);
+    get<%= className %>s = vi.fn().mockReturnValue(of([]));
+    get<%= className %>ById = vi.fn().mockReturnValue(of(null));
+    save<%= className %> = vi.fn().mockResolvedValue(undefined);
+    delete<%= className %> = vi.fn().mockResolvedValue(undefined);
 }
+

@@ -1,0 +1,88 @@
+<div class="animate-in fade-in slide-in-from-bottom-6 duration-700 p-6 max-w-lg mx-auto pb-24">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-8">
+        <button routerLink="/readings" class="w-10 h-10 bg-slate-50 border border-slate-200/50 rounded-2xl flex items-center justify-center text-slate-700 hover:bg-slate-100 hover:border-slate-300 transition-all active:scale-95 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <h2 class="text-xl font-black uppercase tracking-tight text-slate-900 italic">Record Extraction</h2>
+        <div class="w-10"></div> <!-- Spacer -->
+    </div>
+
+    <!-- Timer / Stopwatch Segment -->
+    <div class="bg-white rounded-[2.5rem] border border-black/[0.03] shadow-xl p-8 mb-6 flex flex-col items-center relative overflow-hidden">
+        <!-- Background Glowing Accent -->
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 blur-[80px] rounded-full"></div>
+        <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-700/10 blur-[80px] rounded-full"></div>
+
+        <!-- Glow Ring & Timer -->
+        <div class="w-48 h-48 rounded-full border-4 border-slate-100 flex flex-col items-center justify-center shadow-inner relative mb-6"
+             [class.border-amber-500]="timerActive()"
+             [class.shadow-[0_0_20px_rgba(245,158,11,0.2)]]="timerActive()"
+             class="transition-all duration-500">
+            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-1">Extraction Time</span>
+            <span class="text-5xl font-black tracking-tighter text-slate-900 font-mono">
+                {{ timerSeconds().toFixed(1) }}s
+            </span>
+            <span class="text-[9px] font-bold text-amber-600 uppercase tracking-widest mt-1" [class.animate-pulse]="timerActive()">
+                {{ timerActive() ? 'Logging...' : 'Ready' }}
+            </span>
+        </div>
+
+        <!-- Timer Action buttons -->
+        <div class="flex items-center gap-3 w-full">
+            <button (click)="resetTimer()"
+                class="flex-1 py-3 text-xs font-black uppercase tracking-wider bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 rounded-2xl transition-all border border-slate-200/40">
+                Reset
+            </button>
+            @if (!timerActive()) {
+                <button (click)="startTimer()"
+                    class="flex-[2] py-3 text-xs font-black uppercase tracking-wider bg-amber-500 hover:bg-amber-600 active:scale-95 text-white rounded-2xl transition-all shadow-md shadow-amber-500/20">
+                    Start Timer
+                </button>
+            } @else {
+                <button (click)="pauseTimer()"
+                    class="flex-[2] py-3 text-xs font-black uppercase tracking-wider bg-slate-900 hover:bg-slate-800 active:scale-95 text-white rounded-2xl transition-all shadow-lg">
+                    Pause
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- Inputs Form -->
+    <div class="bg-white rounded-[2.5rem] border border-black/[0.03] shadow-xl p-8 space-y-6 mb-8">
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Coffee Dose -->
+            <div>
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Coffee Dose (In)</label>
+                <div class="relative flex items-center">
+                    <input type="number" step="0.1" [(ngModel)]="coffeeMass" 
+                        class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all pr-12">
+                    <span class="absolute right-4 text-xs font-black text-slate-400 uppercase">G</span>
+                </div>
+            </div>
+
+            <!-- Beverage Yield -->
+            <div>
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Yield (Out)</label>
+                <div class="relative flex items-center">
+                    <input type="number" step="0.1" [(ngModel)]="waterMass" 
+                        class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all pr-12">
+                    <span class="absolute right-4 text-xs font-black text-slate-400 uppercase">G</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div>
+            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Extraction Notes</label>
+            <textarea [(ngModel)]="notes" rows="3" placeholder="Describe the taste profile, channel checks, roast age..."
+                class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-amber-500 outline-none transition-all placeholder:text-slate-400/80 resize-none"></textarea>
+        </div>
+    </div>
+
+    <!-- Action button -->
+    <button (click)="saveReading()"
+        class="w-full py-4 text-sm font-black uppercase tracking-widest bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-[0.98] text-white rounded-[2rem] transition-all shadow-xl shadow-amber-500/25">
+        Save Shot Run
+    </button>
+</div>

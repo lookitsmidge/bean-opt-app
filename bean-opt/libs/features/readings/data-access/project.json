@@ -1,0 +1,20 @@
+{
+  "name": "features/readings-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/features/readings/data-access/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:features/readings", "type:data-access"],
+  "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "config": "libs/features/readings/data-access/vite.config.mts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

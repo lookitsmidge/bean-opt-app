@@ -1,5 +1,5 @@
 import { signalStore, withState } from '@ngrx/signals';
-import { <%= className %> } from '@wfi/<%= fileName %>/domain';
+import { <%= className %> } from '@boa/<%= fileName %>/domain';
 import { with<%= className %>Sync } from './<%= fileName %>.sync';
 import { with<%= className %>Commands } from './<%= fileName %>.commands';
 

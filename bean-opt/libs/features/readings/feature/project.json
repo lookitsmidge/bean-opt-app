@@ -1,0 +1,20 @@
+{
+  "name": "features/readings-feature",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/features/readings/feature/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:features/readings", "type:feature"],
+  "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "config": "libs/features/readings/feature/vite.config.mts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -78,6 +78,10 @@ _Goal: Enterprise performance at hobbyist costs._
   - Build UI views/dialogs for registering custom equipment (e.g. *IMS High Flow Rate Basket*, *Normcore Shaker*, *Normcore V4 Tamper*, *Normcore Bottomless Portafilter*) into the `coffee_equipments` database table.
   - Build UI controls inside the setup configurator to associate these tools to specific configuration setups using the `setup_equipments` database link-table.
 
+### Database & Seed Management
+- `[ ]` **Seed Data Scripts**:
+  - Add SQL seed scripts to populate default configurations for workflows, machines, grinders, and beans so that they are automatically available upon deployment.
+
 ---
 
 ## Summary of Completion & Milestones

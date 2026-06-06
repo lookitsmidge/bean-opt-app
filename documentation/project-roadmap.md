@@ -8,90 +8,84 @@ This document provides a high-level overview of the project's progress, categori
 - `[/]` **In Progress / Partial**: Backend infrastructure exists, but UI or logic is incomplete.
 - `[ ]` **To Do**: Not yet started or fundamentally missing.
 
-## Architectural Foundations (Low-Cost / High-Value)
+---
+
+## Architectural Foundations
 
 _Goal: Enterprise performance at hobbyist costs._
 
-**User Story: High-Performance Security**
-- `[x]` Implement JWT Sync trigger: to sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks`
+- `[x]` **JWT Sync trigger**: Sync `user_roles` to `auth.users` app_metadata for join-free, millisecond RLS checks.
+- `[x]` **Scaffolding Tooling Migration**: Migrated all monorepo libraries and scaffolding tooling from Jest to Vitest (`vitest-analog`) to align test execution speeds.
 
-## Feature 1: Authentication & User Governance
+---
 
-- **User Story: Secure Sign-Up & Identity**
-  - `[ ]` Implement Supabase Auth (Email/Google).
-  - `[ ]` Allow email sign in and Google
-  - `[ ]` Disallow anonymous sign-ins
-  - `[ ]` Landing page for our page, that says about us, then allows user to log in
-  - `[ ]` Legal: accessible privacy policy
-  - `[ ]` Legal: Include brief T&C and Privacy Policy
-- **User Story: Administrative User Management**
-  - `[ ]` Admins to approve new sign-ups
-  - `[ ]` Admins to delete accounts and all their data
+## Completed Features
 
-## Core: UI and Design System
+### Feature: Espresso Track & Run Management (Stopwatch & Logs)
+- `[x]` **Stopwatch Timer**: Integrated Angular Signals-based stopwatch tracking pre-infusion and extraction timings.
+- `[x]` **Pre-infusion & Extraction Lap Split**: Stopwatch supports lap split to correctly segment pre-infusion from main extraction.
+- `[x]` **Manual Timing Entries**: Supports entering and editing timings manually when the stopwatch is idle (for logging historic extractions).
+- `[x]` **Mass Input/Output Logs**: Input grams (coffee dose) and output grams (beverage yield).
+- `[x]` **Flavor Balance & Shot Quality Ratings**: Embedded 1-10 flavor balance slider (Under-extracted/Gold Zone/Over-extracted) and a 0-5 star shot quality rating system with a bright glowing active style.
+- `[x]` **Reading Edits**: Full edit mode supporting loading past readings, retaining original timestamps, and performing database updates cleanly without duplicating state.
+- `[x]` **Advanced Defaults Orchestration**:
+  - Brand new logs auto-populate selected coffee, setup, workflow, warming shot, dose, and yield from the overall most recent reading.
+  - Changing the selected coffee bean reactively updates form parameters (setup, workflow, warming shot, dose, and yield) to match the last shot logged for that specific bean.
+  - Defaults are safely bypassed in edit mode (`!isEditMode()`) to prevent overwriting modified data.
 
-- **User Story: Modernised Shell**
-  - `[ ]` Layout: Headerless design
-  - `[ ]` Floating profile icon for mobile users
-  - `[ ]` Responsive shop.com floating navbar for mobile and sidenav for desktop
-  - `[ ]` Multiple theme systems: automatic WCAG compliance with high contrast & dark mode
+### Feature: Bean Management
+- `[x]` **Hopper Registry**: Register and archive beans including brand, roaster, notes, price, and active hopper status.
+- `[x]` **Extraction Target Profiles**: Mapped nested target profile ranges (Min/Max pre-infusion, Min/Max extraction time, Yield, and Flow-Rate) directly linked to target taste profiles (e.g. "Sweet & Fruity") under each coffee bean.
+- `[x]` **Targets Display**: Displays target specifications for the selected coffee bean dynamically and reactively on the Record/Edit Shot log page.
 
-## Feature: Bean Management
-- **User Story: Record beans you are logging**
-  - cost per cup?
-  - bean brands
-  - store recommended ranges for these beans and any grind size settings you have found or workflows
+### Feature: Equipment & Setup Management
+- `[x]` **Entities Refactor**: Replaced legacy model/year/type fields under Coffee Machines and Grinders with a unified `manufacturer` description.
+- `[x]` **Setup Configurator**: Combine active machines, grinders, and custom tools (baskets, portafilters, shakers) into functional setups.
+- `[x]` **Modern Angular Controls**: Converted all equipment templates to use Angular 17+ block syntax (`@if`, `@for`).
 
-## Feature: Run Management (Espresso Tracking)
-- **User Story: Record a run**
-  - `[x]` in-built timer (fully integrated with Angular Signals stopwatch UI)
-  - `[ ]` Support manual entry of extraction time (as an alternative to the interactive stopwatch timer)
-  - `[ ]` double/single toggle 
-  - `[x]` grams in (coffee mass logs)
-  - `[x]` grams out (water yield logs)
-  - `[ ]` readout and shot mapping (plot it and ask for taste feedback).
+### Feature: Workflow Management
+- `[x]` **Structured Steps**: Refactored workflow steps to replace the unstructured text content field with explicit `title` and `instructions` fields.
+- `[x]` **Visual Checklist**: Workflows render step sequences with title headings and instructions displayed dynamically in ordered sequence cards.
 
-## Shot Diagnosis Tool
-- **User Story: Shot Doctor diagnosis tool**
-  - Help you tune your beans for your machine, accounting for many variables (to be researched) including initial heat, preinfusion and what to look for.
-  - think install wizard but for coffee bean tuning
+---
 
-## Testing & Quality Audit (Decision Matrix)
+## Remaining Backlog & Future Tasks
 
-_to be completed in time_
+### Feature 1: Authentication & User Governance
+- `[ ]` **Sign-In Options**: Configure email sign-up/sign-in and Google OAuth login flows.
+- `[ ]` **Access Controls**: Disable anonymous access and enforce admin validation check for new user approvals.
+- `[ ]` **Landing Page**: Build custom landing page introducing BeanOpt with an entry gateway.
+- `[ ]` **Legal & Privacy**: Draft accessible Terms & Conditions and Privacy Policy.
+- `[ ]` **Account Offboarding**: Implement account deletion trigger cascade to wipe all associated database logs.
 
-## Summary of Completion
+### Core: UI and Design System
+- `[ ]` **Modernised Shell Layout**: Move to headerless workspace layouts.
+- `[ ]` **Mobile Optimisations**: Add floating profile settings panel and reactive mobile navigation bar.
+- `[ ]` **WCAG Themes**: Fully automated high contrast, light, and dark accessibility themes.
 
-- **Auth Security & RLS**: Configured JWT claim synchronisation to enable join-free RLS checks. Restricted profile accessibility to owners.
-- **Readings Feature Scaffold**: Created four DDD-tiered libraries under `libs/features/readings` for espresso logging. Applied migration for the `espresso_readings` table and set up RLS policies.
-- **Scaffolding Tooling Migration**: Converted the code generator workspace libraries scaffolding mechanism from Jest to Vitest (`vitest-analog`). Configured automatic explicit `@nx/vitest:test` targets generation.
-- **Testing Alignment**: Successfully migrated all readings libraries, tooling project configuration files, and unit tests to Vitest. All test suites pass successfully.
+### Diagnostics & Shot Analysis
+- `[ ]` **Shot Diagnosis Tool (Shot Doctor)**:
+  - Step-wise installation wizard mapping extraction parameters (yield, timings, flow rate, flavor balance) against troubleshooting decision trees.
+  - Suggest corrective adjustments (grind coarser/finer, adjust temperature, change pre-infusion) to resolve sourness or bitterness.
+- `[ ]` **Shot Charts & Mapping**:
+  - Render extraction graphs (flow rate, yield progression curves) and interactive analytics.
+  - Double/Single basket filter toggle logs.
 
-## Next Session (Handoff Log)
+### Custom Equipment & Setup Assignment
+- `[ ]` **Custom Equipment UI**:
+  - Build UI views/dialogs for registering custom equipment (e.g. *IMS High Flow Rate Basket*, *Normcore Shaker*, *Normcore V4 Tamper*, *Normcore Bottomless Portafilter*) into the `coffee_equipments` database table.
+  - Build UI controls inside the setup configurator to associate these tools to specific configuration setups using the `setup_equipments` database link-table.
 
-- **Ready for UI & Shell Hooks**: All foundations, database migrations, types generation, and testing configurations are active and compiling cleanly under production configurations. The Readings Feature has a functional UI with stopwatch timer inputs, awaiting routing hookups to the main shell.
+---
 
-## Immediate Next Steps:
+## Summary of Completion & Milestones
 
-1. **Routing Shell Integration**: Link up the `READINGS_ROUTES` path to the main application navigation menu.
-2. **Header Navigation & Auth Buttons**: Connect the route guards (`AuthGuard`) and configure the header navigation/auth login triggers.
-3. **Bean Selection**: Integrate coffee bean selection within the espresso logging readings panel.
+1. **Phase 1-2: Auth & Scaffold**: Synchronized JWT auth metadata with Postgres roles. Created and tested the core readings library tiers using Vitest.
+2. **Phase 3-4: Equipment & Workflows**: Refactored machine and grinder attributes to highlight manufacturers, and structured workflow steps with headings/instructions.
+3. **Phase 5-6: Stopwatch & Extraction Targets**: Resolved stopwatch lap splitting bugs, added multiple target profile definitions per coffee, and cascade saved target ranges.
+4. **Phase 7-8: Pre-infusion Targets & Manual Timers**: Added support for pre-infusion targets in coffee forms, clarified flow-rate metrics apply strictly to extraction, and added manual input support for timing segments.
+5. **Phase 9: Reading Edits & Advanced Defaults**: Completed edit page mapping, overall last shot defaults, bean-specific parameter default overrides on dropdown changes, targets display box on log page, and enhanced glowing active stars layout.
 
-## Backlog:
-
-- **Espresso Readings & Lap Timer Enhancements**:
-  - `[ ]` Integrate pre-infusion and extraction lap timer in stopwatch UI
-  - `[ ]` Allow user to select coffee bean used for extraction (referencing `coffees` table)
-  - `[ ]` Allow user to select equipment setup used for extraction (referencing `setups` table, defaulting to last one used)
-  - `[ ]` Support star rating (0-5 stars)
-  - `[ ]` Support flavor balance rating slider (1-10 range for under-extracted, balanced, over-extracted)
-  
-- **Bean Management Features**:
-  - `[ ]` Database migration and UI elements for logging beans (brands, roaster, roastery, roast date, remaining bag weight, bag photo/upload, shopping URLs/links)
-  - `[ ]` Create database schema and UI elements for coffee target ranges (specifying upper/lower bounds for yields, extraction times, and flow rates)
-  
-- **Workflow Management Features**:
-  - `[ ]` Database migration and UI elements to add/edit workflows and their steps (ordered sequence with 'Stage: Before | During | After', content, and 'Important' highlighting flag)
-
-- **Equipment & Setup Management Features**:
-  - `[ ]` Database migrations and UI elements to add/edit setups, coffee machines, coffee grinders, and custom equipment (portafilters, baskets, shakers, WDT)
+## Next Session Focus
+- **Epic Authentication**: Complete user authentication signup flow, admin authorization guards, and accounts dashboard layouts.
+- **E2E & Shell Layouts**: Connect route guards and transition the interface shell to a headerless design.

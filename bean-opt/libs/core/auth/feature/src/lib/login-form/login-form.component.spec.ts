@@ -98,7 +98,7 @@ describe('LoginFormComponent', () => {
     mockAuthStore.error.set('Login Failed');
     fixture.detectChanges();
 
-    const errorElement = fixture.nativeElement.querySelector('.bg-rose-50 p');
+    const errorElement = fixture.nativeElement.querySelector('.auth-error-message');
     expect(errorElement.textContent).toContain('Login Failed');
   });
 });

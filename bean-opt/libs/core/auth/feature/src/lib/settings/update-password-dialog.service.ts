@@ -1,21 +1,18 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdatePasswordDialogComponent } from './update-password-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class UpdatePasswordDialogService {
-    isOpen = signal(false);
-
-    private resolverFn: ((value: string | null) => void) | null = null;
+    private dialog = inject(MatDialog);
 
     async open(): Promise<string | null> {
-        this.isOpen.set(true);
-        return new Promise((resolve) => {
-            this.resolverFn = resolve;
+        const dialogRef = this.dialog.open(UpdatePasswordDialogComponent, {
+            maxWidth: '400px',
+            width: '90vw',
         });
-    }
-
-    close(result: string | null = null) {
-        this.isOpen.set(false);
-        this.resolverFn?.(result);
-        this.resolverFn = null;
+        return new Promise((resolve) => {
+            dialogRef.afterClosed().subscribe((res) => resolve(res || null));
+        });
     }
 }

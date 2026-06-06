@@ -4,7 +4,7 @@
   <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 py-2 border-b border-solid border-slate-100">
     <div>
       <h1 class="text-3xl font-black italic tracking-tight uppercase mb-1">
-        Welcome back, <span class="text-primary">{{ user().displayName }}</span>
+        Welcome back, <span class="text-primary">{{ user()?.displayName }}</span>
       </h1>
       <p class="text-sm text-slate-500 m-0">Let's dial in the perfect extraction today.</p>
     </div>
@@ -86,7 +86,7 @@
     <h2 class="text-lg font-black uppercase tracking-widest italic text-slate-700">Quick Actions</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       
-      <button routerLink="/runs/new" class="action-card group flex items-center gap-4 p-5 rounded-[2rem] text-left border-none cursor-pointer transition-all duration-300">
+      <button routerLink="/readings/new" class="action-card group flex items-center gap-4 p-5 rounded-[2rem] text-left border-none cursor-pointer transition-all duration-300">
         <div class="action-icon-box w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
           <mat-icon>play_circle</mat-icon>
         </div>

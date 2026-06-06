@@ -3,12 +3,11 @@ import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/cor
 import { AuthStore, ProfileStore } from "@boa/core-auth-application";
 import { Router, RouterLink, RouterModule } from "@angular/router";
 import { UpdatePasswordDialogService } from "./update-password-dialog.service";
-import { UpdatePasswordDialogComponent } from "./update-password-dialog.component";
 
 @Component({
     selector: 'lib-settings-dashboard',
     standalone: true,
-    imports: [CommonModule, UpdatePasswordDialogComponent, RouterLink, RouterModule],
+    imports: [CommonModule, RouterLink, RouterModule],
     templateUrl: './settings-dashboard.component.html',
     providers: [UpdatePasswordDialogService],
     changeDetection: ChangeDetectionStrategy.OnPush

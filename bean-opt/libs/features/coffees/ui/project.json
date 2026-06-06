@@ -1,0 +1,13 @@
+{
+  "name": "features/coffees-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/features/coffees/ui/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:shop", "type:ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

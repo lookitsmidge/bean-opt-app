@@ -43,7 +43,35 @@
       "@boa/features/readings/feature": [
         "./libs/features/readings/feature/src/index.ts"
       ],
-      "@boa/features/readings/ui": ["./libs/features/readings/ui/src/index.ts"]
+      "@boa/features/readings/ui": ["./libs/features/readings/ui/src/index.ts"],
+      "@boa/features/coffees/domain": [
+        "./libs/features/coffees/domain/src/index.ts"
+      ],
+      "@boa/features/coffees/data-access": [
+        "./libs/features/coffees/data-access/src/index.ts"
+      ],
+      "@boa/features/coffees/application": [
+        "./libs/features/coffees/application/src/index.ts"
+      ],
+      "@boa/features/coffees/feature": [
+        "./libs/features/coffees/feature/src/index.ts"
+      ],
+      "@boa/features/coffees/ui": ["./libs/features/coffees/ui/src/index.ts"],
+      "@boa/features/equipment/domain": [
+        "./libs/features/equipment/domain/src/index.ts"
+      ],
+      "@boa/features/equipment/data-access": [
+        "./libs/features/equipment/data-access/src/index.ts"
+      ],
+      "@boa/features/equipment/application": [
+        "./libs/features/equipment/application/src/index.ts"
+      ],
+      "@boa/features/equipment/feature": [
+        "./libs/features/equipment/feature/src/index.ts"
+      ],
+      "@boa/features/equipment/ui": [
+        "./libs/features/equipment/ui/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthStore } from '@boa/core-auth-application'
 
 export interface ShotLog {
   id: string;
@@ -45,13 +46,11 @@ export interface CoffeeBean {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
+  protected readonly auth = inject(AuthStore);
   today = new Date();
 
   // Mock logged-in user details
-  user = signal({
-    displayName: 'Barista James',
-    photoUrl: ''
-  });
+  user = this.auth.user;
 
   // Analytics stats
   totalShots = signal(38);

@@ -1,0 +1,13 @@
+{
+  "name": "features/equipment-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/features/equipment/data-access/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:shop", "type:data-access"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

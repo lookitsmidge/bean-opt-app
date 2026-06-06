@@ -75,7 +75,7 @@
       <!-- Error Display -->
       @if (authStore.error()) {
         <div class="p-4 bg-[color-mix(in_srgb,var(--mat-sys-error-container)_20%,transparent)] border border-[color-mix(in_srgb,var(--mat-sys-error-container)_40%,transparent)] rounded-2xl animate-in">
-          <p class="text-[10px] font-black uppercase tracking-widest text-[var(--mat-sys-error)] text-center">
+          <p class="auth-error-message text-[10px] font-black uppercase tracking-widest text-[var(--mat-sys-error)] text-center">
             {{ authStore.error() }}
           </p>
         </div>

@@ -50,7 +50,7 @@ export class SupabaseCoffeeGrinderRepository implements ICoffeeGrinderRepository
         id: grinder.id,
         user_id: grinder.userId,
         name: grinder.name,
-        model: grinder.model,
+        manufacturer: grinder.manufacturer,
         active: grinder.active,
         created_at: grinder.createdAt,
       });
@@ -72,7 +72,7 @@ export class SupabaseCoffeeGrinderRepository implements ICoffeeGrinderRepository
       id: row.id,
       userId: row.user_id,
       name: row.name,
-      model: row.model,
+      manufacturer: row.manufacturer,
       active: Boolean(row.active),
       createdAt: row.created_at,
     };

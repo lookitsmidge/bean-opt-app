@@ -1,1 +1,1 @@
-// Export ui components here
+export * from './lib/coffee-card/coffee-card.component';

@@ -92,7 +92,7 @@ export type Database = {
           active: boolean
           created_at: string
           id: string
-          model: string | null
+          manufacturer: string | null
           name: string
           user_id: string
         }
@@ -100,7 +100,7 @@ export type Database = {
           active?: boolean
           created_at?: string
           id?: string
-          model?: string | null
+          manufacturer?: string | null
           name: string
           user_id: string
         }
@@ -108,7 +108,7 @@ export type Database = {
           active?: boolean
           created_at?: string
           id?: string
-          model?: string | null
+          manufacturer?: string | null
           name?: string
           user_id?: string
         }
@@ -127,7 +127,7 @@ export type Database = {
           active: boolean
           created_at: string
           id: string
-          model: string | null
+          manufacturer: string | null
           name: string
           user_id: string
         }
@@ -135,7 +135,7 @@ export type Database = {
           active?: boolean
           created_at?: string
           id?: string
-          model?: string | null
+          manufacturer?: string | null
           name: string
           user_id: string
         }
@@ -143,7 +143,7 @@ export type Database = {
           active?: boolean
           created_at?: string
           id?: string
-          model?: string | null
+          manufacturer?: string | null
           name?: string
           user_id?: string
         }
@@ -164,10 +164,13 @@ export type Database = {
           id: string
           max_extraction_time: number | null
           max_flow_rate: number | null
+          max_preinfusion_time: number | null
           max_yield: number | null
           min_extraction_time: number | null
           min_flow_rate: number | null
+          min_preinfusion_time: number | null
           min_yield: number | null
+          taste_profile: string
         }
         Insert: {
           coffee_id: string
@@ -175,10 +178,13 @@ export type Database = {
           id?: string
           max_extraction_time?: number | null
           max_flow_rate?: number | null
+          max_preinfusion_time?: number | null
           max_yield?: number | null
           min_extraction_time?: number | null
           min_flow_rate?: number | null
+          min_preinfusion_time?: number | null
           min_yield?: number | null
+          taste_profile?: string
         }
         Update: {
           coffee_id?: string
@@ -186,10 +192,13 @@ export type Database = {
           id?: string
           max_extraction_time?: number | null
           max_flow_rate?: number | null
+          max_preinfusion_time?: number | null
           max_yield?: number | null
           min_extraction_time?: number | null
           min_flow_rate?: number | null
+          min_preinfusion_time?: number | null
           min_yield?: number | null
+          taste_profile?: string
         }
         Relationships: [
           {
@@ -205,31 +214,40 @@ export type Database = {
         Row: {
           active: boolean
           created_at: string
+          description: string | null
           id: string
           name: string
           notes: string | null
-          roast_date: string | null
+          price_per_kg: number | null
+          roast_profile: string | null
           roaster: string | null
+          url: string | null
           user_id: string
         }
         Insert: {
           active?: boolean
           created_at?: string
+          description?: string | null
           id?: string
           name: string
           notes?: string | null
-          roast_date?: string | null
+          price_per_kg?: number | null
+          roast_profile?: string | null
           roaster?: string | null
+          url?: string | null
           user_id: string
         }
         Update: {
           active?: boolean
           created_at?: string
+          description?: string | null
           id?: string
           name?: string
           notes?: string | null
-          roast_date?: string | null
+          price_per_kg?: number | null
+          roast_profile?: string | null
           roaster?: string | null
+          url?: string | null
           user_id?: string
         }
         Relationships: [
@@ -481,30 +499,33 @@ export type Database = {
       }
       workflow_steps: {
         Row: {
-          content: string
           created_at: string
           id: string
           important: boolean
+          instructions: string | null
           stage: string
           step_number: number
+          title: string | null
           workflow_id: string
         }
         Insert: {
-          content: string
           created_at?: string
           id?: string
           important?: boolean
+          instructions?: string | null
           stage: string
           step_number: number
+          title?: string | null
           workflow_id: string
         }
         Update: {
-          content?: string
           created_at?: string
           id?: string
           important?: boolean
+          instructions?: string | null
           stage?: string
           step_number?: number
+          title?: string | null
           workflow_id?: string
         }
         Relationships: [

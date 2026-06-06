@@ -17,10 +17,19 @@ export function withEspressoReadingCommands() {
         try {
           patchState(store, { loading: true, error: null });
           await repo.saveReading(item);
-          patchState(store, (state) => ({
-            items: [...state.items, item],
-            loading: false,
-          }));
+          patchState(store, (state) => {
+            const existsIndex = state.items.findIndex((i) => i.id === item.id);
+            const items = [...state.items];
+            if (existsIndex !== -1) {
+              items[existsIndex] = item;
+            } else {
+              items.push(item);
+            }
+            return {
+              items,
+              loading: false,
+            };
+          });
         } catch (e: any) {
           patchState(store, { loading: false, error: e.message });
           throw e;

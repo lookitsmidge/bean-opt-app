@@ -21,6 +21,18 @@ export const SHELL_NAV_BUTTONS: ShellNavigationButton[] = [
     ariaLabel: 'Readings',
     svgName: 'insights',
     showForAnonymous: false,
+  },
+  {
+    link: '/beans',
+    ariaLabel: 'Beans',
+    svgName: 'grain',
+    showForAnonymous: false,
+  },
+  {
+    link: '/equipment',
+    ariaLabel: 'Equipment',
+    svgName: 'coffee_maker',
+    showForAnonymous: false,
   }
 ]
 

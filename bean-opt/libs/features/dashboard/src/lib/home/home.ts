@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AuthStore } from '@boa/core-auth-application'
+import { AuthStore } from '@boa/core-auth-application';
+import { CoffeeStore } from '@boa/features/coffees/application';
+import { EspressoReadingStore } from '@boa/features/readings/application';
 
 export interface ShotLog {
   id: string;
@@ -24,7 +26,7 @@ export interface CoffeeBean {
   id: string;
   name: string;
   roaster: string;
-  roastDate: Date;
+  roastDate: Date | null;
   roastLevel: 'Light' | 'Medium' | 'Medium-Dark' | 'Dark';
   grindRange: string;
   notes: string;
@@ -45,82 +47,84 @@ export interface CoffeeBean {
   styleUrl: './home.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   protected readonly auth = inject(AuthStore);
+  protected readonly coffeeStore = inject(CoffeeStore);
+  protected readonly espressoStore = inject(EspressoReadingStore);
+
   today = new Date();
 
-  // Mock logged-in user details
+  // Logged-in user details
   user = this.auth.user;
 
-  // Analytics stats
-  totalShots = signal(38);
-  activeBeansCount = signal(2);
-  avgExtractionTime = signal(26.8);
-  averageRating = signal(4.3);
-
-  // Mock list of active beans in hopper
-  activeBeans = signal<CoffeeBean[]>([
-    {
-      id: 'bean-1',
-      name: 'Ethiopia Yirgacheffe',
-      roaster: 'Origin Coffee Roasters',
-      roastDate: new Date('2026-05-15'),
-      roastLevel: 'Light',
-      grindRange: '13.5 - 15.0',
-      notes: 'Floral jasmine, blueberry, tea-like body',
-      remainingGrams: 120
-    },
-    {
-      id: 'bean-2',
-      name: 'Guatemala Huehuetenango',
-      roaster: 'Hasbean Roastery',
-      roastDate: new Date('2026-05-10'),
-      roastLevel: 'Medium',
-      grindRange: '14.0 - 15.5',
-      notes: 'Red apple, milk chocolate, maple sweetness',
-      remainingGrams: 75
+  ngOnInit() {
+    const user = this.auth.user();
+    if (user) {
+      this.coffeeStore.loadCoffees(user.uid);
+      this.espressoStore.loadReadings(user.uid);
     }
-  ]);
+  }
 
-  // Mock recent extraction log
-  recentShots = signal<ShotLog[]>([
-    {
-      id: 'shot-1',
-      beanName: 'Ethiopia Yirgacheffe',
-      roaster: 'Origin Coffee Roasters',
-      grindSetting: '14.2',
-      gramsIn: 18.0,
-      gramsOut: 36.5,
-      extractionTime: 27,
-      rating: 5,
-      tasteNotes: 'Stunning blueberry explosion, very clean jasmine finish.',
-      createdAt: new Date('2026-05-25T08:12:00')
-    },
-    {
-      id: 'shot-2',
-      beanName: 'Guatemala Huehuetenango',
-      roaster: 'Hasbean Roastery',
-      grindSetting: '14.8',
-      gramsIn: 18.0,
-      gramsOut: 38.0,
-      extractionTime: 24,
-      rating: 3.5,
-      tasteNotes: 'Slightly sour acidity, thin body. Need to grind finer.',
-      createdAt: new Date('2026-05-24T15:30:00')
-    },
-    {
-      id: 'shot-3',
-      beanName: 'Ethiopia Yirgacheffe',
-      roaster: 'Origin Coffee Roasters',
-      grindSetting: '14.5',
-      gramsIn: 18.2,
-      gramsOut: 36.0,
-      extractionTime: 29,
-      rating: 4.5,
-      tasteNotes: 'Balanced sweet orange, rich chocolate notes coming through.',
-      createdAt: new Date('2026-05-24T09:05:00')
-    }
-  ]);
+  // Analytics stats computed dynamically from stores
+  totalShots = computed(() => this.espressoStore.items().length);
+  activeBeansCount = computed(() => this.coffeeStore.items().filter((c) => c.active).length);
+
+  avgExtractionTime = computed(() => {
+    const items = this.espressoStore.items();
+    if (items.length === 0) return 0;
+    const sum = items.reduce((acc, x) => acc + x.extractionTime, 0);
+    return Math.round((sum / items.length) * 10) / 10;
+  });
+
+  averageRating = computed(() => {
+    const items = this.espressoStore.items();
+    if (items.length === 0) return 0;
+    const sum = items.reduce((acc, x) => acc + x.rating, 0);
+    return Math.round((sum / items.length) * 10) / 10;
+  });
+
+  // Active beans mapped from active coffees in store
+  activeBeans = computed<CoffeeBean[]>(() => {
+    return this.coffeeStore.items()
+      .filter((c) => c.active)
+      .map((c) => ({
+        id: c.id,
+        name: c.name,
+        roaster: c.roaster || 'Unknown Roaster',
+        roastDate: null,
+        roastLevel: c.roastProfile
+          ? (c.roastProfile.charAt(0).toUpperCase() + c.roastProfile.slice(1)) as 'Light' | 'Medium' | 'Medium-Dark' | 'Dark'
+          : 'Medium',
+        grindRange: 'Dialed In',
+        notes: c.description || c.notes || 'No description recorded.',
+        remainingGrams: 250, // Default to a standard full bag weight
+      }));
+  });
+
+  // Recent extractions mapped from espresso readings
+  recentShots = computed<ShotLog[]>(() => {
+    const readings = this.espressoStore.items();
+    const coffees = this.coffeeStore.items();
+
+    return [...readings]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 3)
+      .map((r) => {
+        const coffee = coffees.find((c) => c.id === r.coffeeId);
+        return {
+          id: r.id,
+          beanName: coffee ? coffee.name : 'Unknown Beans',
+          roaster: coffee?.roaster || 'Unknown Roaster',
+          grindSetting: 'N/A', // Setups hold grinder settings; fallback for simplicity
+          gramsIn: r.coffeeMassIn,
+          gramsOut: r.totalYield,
+          extractionTime: r.extractionTime,
+          rating: r.rating,
+          tasteNotes: r.comments || 'No comments.',
+          createdAt: new Date(r.createdAt),
+        };
+      });
+  });
 
   /**
    * Helper to generate array of rating stars

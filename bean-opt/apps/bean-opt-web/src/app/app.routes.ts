@@ -19,5 +19,15 @@ export const appRoutes: Route[] = [
         path: 'readings',
         canActivate: [IsAuthenticatedAuthGuard],
         loadChildren: () => import('@boa/features/readings/feature').then(x => x.READINGS_ROUTES)
+    },
+    {
+        path: 'beans',
+        canActivate: [IsAuthenticatedAuthGuard],
+        loadChildren: () => import('@boa/features/coffees/feature').then(x => x.BEANS_ROUTES)
+    },
+    {
+        path: 'equipment',
+        canActivate: [IsAuthenticatedAuthGuard],
+        loadChildren: () => import('@boa/features/equipment/feature').then(x => x.EQUIPMENT_ROUTES)
     }
 ];

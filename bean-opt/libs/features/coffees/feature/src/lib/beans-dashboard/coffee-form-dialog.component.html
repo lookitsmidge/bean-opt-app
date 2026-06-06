@@ -1,0 +1,154 @@
+<h2 mat-dialog-title class="text-lg font-black uppercase tracking-wider text-slate-800 m-0 pb-2 border-b border-solid border-slate-100">
+  {{ isEditMode ? 'Edit Coffee Roast' : 'Register New Coffee' }}
+</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-dialog-content class="space-y-4 pt-6 pb-2 min-w-[350px] max-h-[60vh] overflow-y-auto custom-scrollbar">
+    
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Bean Name</mat-label>
+      <input matInput formControlName="name" placeholder="Ethiopia Yirgacheffe">
+      <mat-error>Bean Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Roaster / Roastery</mat-label>
+      <input matInput formControlName="roaster" placeholder="Origin Coffee Roasters">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Roast Profile</mat-label>
+      <mat-select formControlName="roastProfile">
+        <mat-option value="light">Light</mat-option>
+        <mat-option value="medium">Medium</mat-option>
+        <mat-option value="dark">Dark</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Price per Kg (£)</mat-label>
+      <input matInput type="number" step="0.01" min="0" formControlName="pricePerKg" placeholder="24.50">
+      <mat-error>Price must be a positive number</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Purchase URL / Bean Link</mat-label>
+      <input matInput type="url" formControlName="url" placeholder="https://roastery.com/beans">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="2" placeholder="Origin history, processing method, farm details..."></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Flavor & Tasting Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="2" placeholder="Blueberry explosion, clean jasmine, black tea body..."></textarea>
+    </mat-form-field>
+
+    <!-- Extraction Target Profiles -->
+    <div class="border-t border-solid border-slate-100 pt-4">
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">Extraction Target Profiles</span>
+        <button mat-button type="button" (click)="addTarget()" class="uppercase tracking-widest text-[9px] font-black hover:bg-slate-50 px-3 py-1">
+          Add Profile
+        </button>
+      </div>
+
+      <div formArrayName="targets" class="space-y-4">
+        @for (target of targets.controls; let idx = $index; track idx) {
+          <div [formGroupName]="idx" 
+               class="flex flex-col gap-3 p-4 bg-slate-50/50 border border-solid border-slate-100 rounded-2xl relative">
+            
+            <button type="button" (click)="removeTarget(idx)" 
+                    class="absolute right-2 top-2 p-1 text-slate-400 hover:text-rose-500 border-none bg-transparent cursor-pointer">
+              <mat-icon class="scale-75">close</mat-icon>
+            </button>
+
+            <span class="text-[10px] font-extrabold text-slate-400">Profile #{{ idx + 1 }}</span>
+
+            <!-- Taste Profile Label -->
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Target Taste Profile / Name</mat-label>
+              <input matInput formControlName="tasteProfile" placeholder="E.g., Sweet & Balanced, Bright Espresso">
+              <mat-error>Taste profile label is required</mat-error>
+            </mat-form-field>
+
+            <!-- Target Ranges Grid -->
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Yield Range -->
+              <div class="contents">
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Min Yield (g)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="minYield" placeholder="36">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Max Yield (g)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="maxYield" placeholder="40">
+                </mat-form-field>
+              </div>
+
+              <!-- Pre-infusion Time Range -->
+              <div class="contents">
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Min Preinfusion (s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="minPreinfusionTime" placeholder="5">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Max Preinfusion (s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="maxPreinfusionTime" placeholder="10">
+                </mat-form-field>
+              </div>
+
+              <!-- Extraction Time Range -->
+              <div class="contents">
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Min Extraction (s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="minExtractionTime" placeholder="28">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Max Extraction (s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="maxExtractionTime" placeholder="32">
+                </mat-form-field>
+              </div>
+
+              <!-- Flow Rate Range -->
+              <div class="contents">
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Min Flow (g/s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="minFlowRate" placeholder="1.8">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                  <mat-label>Max Flow (g/s)</mat-label>
+                  <input matInput type="number" step="0.1" formControlName="maxFlowRate" placeholder="2.2">
+                </mat-form-field>
+              </div>
+
+              <span class="col-span-2 text-[10px] text-slate-400 font-medium leading-normal -mt-1 mb-1">
+                * Note: Flow rate targets apply to the main extraction phase only (excludes pre-infusion).
+              </span>
+            </div>
+
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (isEditMode) {
+      <div class="flex items-center justify-between py-2 border-t border-solid border-slate-50 mt-4">
+        <span class="text-xs font-black uppercase tracking-wider text-slate-500">Hopper Status</span>
+        <mat-slide-toggle formControlName="active" color="primary">Active in Hopper</mat-slide-toggle>
+      </div>
+    }
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="gap-2 pt-4 border-t border-solid border-slate-100">
+    <button mat-button type="button" (click)="cancel()" class="uppercase tracking-widest text-xs font-black text-slate-500">
+      Abort
+    </button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" class="uppercase tracking-widest text-xs font-black px-6 py-2 rounded-xl">
+      {{ isEditMode ? 'Save Roast' : 'Register Roast' }}
+    </button>
+  </mat-dialog-actions>
+</form>

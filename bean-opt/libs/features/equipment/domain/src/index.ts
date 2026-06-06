@@ -7,3 +7,4 @@ export * from './lib/coffee-grinder-repository.interface';
 export * from './lib/setup-repository.interface';
 export * from './lib/workflow-repository.interface';
 export * from './lib/repository.token';
+export * from './lib/testing/equipment-repository.mock';

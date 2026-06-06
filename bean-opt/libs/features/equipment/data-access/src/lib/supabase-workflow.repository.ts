@@ -82,7 +82,8 @@ export class SupabaseWorkflowRepository implements IWorkflowRepository {
         workflow_id: step.workflowId,
         step_number: step.stepNumber,
         stage: step.stage,
-        content: step.content,
+        title: step.title,
+        instructions: step.instructions,
         important: step.important,
         created_at: step.createdAt,
       });
@@ -106,7 +107,8 @@ export class SupabaseWorkflowRepository implements IWorkflowRepository {
         workflowId: s.workflow_id,
         stepNumber: Number(s.step_number),
         stage: s.stage as 'Before' | 'During' | 'After',
-        content: s.content,
+        title: s.title || '',
+        instructions: s.instructions || '',
         important: Boolean(s.important),
         createdAt: s.created_at,
       }))

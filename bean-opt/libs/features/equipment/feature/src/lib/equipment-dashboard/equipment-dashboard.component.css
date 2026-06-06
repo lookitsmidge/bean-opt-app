@@ -1,0 +1,5 @@
+/* Equipment Dashboard Styles */
+.m3-tabs-container {
+  --mdc-tab-indicator-active-indicator-color: var(--mat-sys-primary);
+  --mdc-tab-indicator-active-indicator-height: 3px;
+}

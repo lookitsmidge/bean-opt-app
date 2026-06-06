@@ -50,7 +50,7 @@ export class SupabaseCoffeeMachineRepository implements ICoffeeMachineRepository
         id: machine.id,
         user_id: machine.userId,
         name: machine.name,
-        model: machine.model,
+        manufacturer: machine.manufacturer,
         active: machine.active,
         created_at: machine.createdAt,
       });
@@ -72,7 +72,7 @@ export class SupabaseCoffeeMachineRepository implements ICoffeeMachineRepository
       id: row.id,
       userId: row.user_id,
       name: row.name,
-      model: row.model,
+      manufacturer: row.manufacturer,
       active: Boolean(row.active),
       createdAt: row.created_at,
     };

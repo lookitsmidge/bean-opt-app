@@ -3,7 +3,8 @@ export interface WorkflowStep {
   workflowId: string;
   stepNumber: number;
   stage: 'Before' | 'During' | 'After';
-  content: string;
+  title: string;
+  instructions: string;
   important: boolean;
   createdAt: string;
 }

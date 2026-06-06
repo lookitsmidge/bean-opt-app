@@ -2,7 +2,7 @@ export interface CoffeeMachine {
   id: string;
   userId: string;
   name: string;
-  model: string | null;
+  manufacturer: string | null;
   active: boolean;
   createdAt: string;
 }

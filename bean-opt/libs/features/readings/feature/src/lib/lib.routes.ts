@@ -11,4 +11,8 @@ export const READINGS_ROUTES: Routes = [
     path: 'new',
     component: NewReadingComponent,
   },
+  {
+    path: 'edit/:id',
+    component: NewReadingComponent,
+  },
 ];

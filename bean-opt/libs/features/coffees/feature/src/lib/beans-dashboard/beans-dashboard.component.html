@@ -1,0 +1,61 @@
+<div class="animate-in fade-in slide-in-from-bottom-6 duration-700 p-6 max-w-6xl mx-auto pb-24">
+  
+  <!-- Premium Welcome Header -->
+  <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 border-b border-solid border-slate-100 mb-8 relative">
+    <!-- Decorative Accents -->
+    <div class="absolute -top-16 -left-16 w-32 h-32 bg-amber-500/5 blur-[60px] rounded-full pointer-events-none"></div>
+    
+    <div>
+      <h1 class="text-3xl font-black italic tracking-tight uppercase mb-1">
+        Coffee <span class="text-amber-500">Beans</span>
+      </h1>
+      <p class="text-xs text-slate-500 font-bold uppercase tracking-wider m-0">Inventory & Target Profiles</p>
+    </div>
+
+    <button (click)="openAddDialog()"
+      class="px-6 py-3 text-xs font-black uppercase tracking-widest bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white rounded-2xl transition-all shadow-md shadow-amber-500/20 flex items-center gap-2 cursor-pointer border-none">
+      <mat-icon class="scale-90">add</mat-icon>
+      <span>Register Roast</span>
+    </button>
+  </header>
+
+  <!-- Store Load State / Error -->
+  @if (store.loading()) {
+    <div class="flex flex-col items-center justify-center py-20 space-y-4">
+      <div class="w-10 h-10 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div>
+      <p class="text-[10px] font-black uppercase tracking-widest text-slate-400">Loading hopper inventory...</p>
+    </div>
+  } @else if (store.error()) {
+    <div class="p-6 bg-rose-50 border border-rose-100 rounded-3xl text-center">
+      <p class="text-xs font-bold text-rose-600 uppercase tracking-widest mb-1">Error Syncing Inventory</p>
+      <p class="text-xs text-rose-500/80 m-0">{{ store.error() }}</p>
+    </div>
+  } @else {
+    <!-- Empty State -->
+    @if (store.items().length === 0) {
+      <div class="flex flex-col items-center justify-center text-center py-20 bg-white border border-black/[0.02] rounded-[2.5rem] shadow-sm p-8 max-w-md mx-auto">
+        <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4 text-amber-600">
+          <mat-icon class="scale-125">grain</mat-icon>
+        </div>
+        <h3 class="font-extrabold text-lg text-slate-800 m-0 mb-1">No roasts recorded yet</h3>
+        <p class="text-xs text-slate-400 max-w-[280px] mb-6">Register your first bag of coffee beans to track recipes, roast details, and gold zones.</p>
+        <button (click)="openAddDialog()"
+          class="px-6 py-3 text-xs font-black uppercase tracking-widest bg-amber-500 hover:bg-amber-600 text-white rounded-2xl border-none cursor-pointer">
+          Register First Bag
+        </button>
+      </div>
+    } @else {
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (coffee of store.items(); track coffee.id) {
+          <lib-coffee-card
+            [coffee]="coffee"
+            (editRequested)="openEditDialog($event)"
+            (deleteRequested)="deleteCoffee($event)">
+          </lib-coffee-card>
+        }
+      </div>
+    }
+  }
+
+</div>

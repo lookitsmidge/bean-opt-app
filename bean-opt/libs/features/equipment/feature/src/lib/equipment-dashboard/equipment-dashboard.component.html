@@ -1,0 +1,137 @@
+<div class="animate-in fade-in slide-in-from-bottom-6 duration-700 p-6 max-w-6xl mx-auto pb-24">
+  
+  <!-- Premium Welcome Header -->
+  <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 py-4 border-b border-solid border-slate-100 mb-8 relative">
+    <div class="absolute -top-16 -left-16 w-32 h-32 bg-amber-700/5 blur-[60px] rounded-full pointer-events-none"></div>
+    <div>
+      <h1 class="text-3xl font-black italic tracking-tight uppercase mb-1">
+        Setup & <span class="text-amber-500">Equipment</span>
+      </h1>
+      <p class="text-xs text-slate-500 font-bold uppercase tracking-wider m-0">Machines, Grinders, and Workflows</p>
+    </div>
+  </header>
+
+  <!-- sleeker tabs group -->
+  <mat-tab-group dynamicHeight animationDuration="300ms" class="m3-tabs-container">
+    
+    <!-- SETUPS TAB -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex items-center gap-2 font-black uppercase tracking-wider text-xs italic">
+          <mat-icon class="scale-90">tune</mat-icon>
+          <span>Setups</span>
+        </div>
+      </ng-template>
+      <div class="pt-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 m-0">Active Setups</h3>
+          <button mat-flat-button color="primary" (click)="openAddSetup()" class="uppercase tracking-widest text-xs font-black rounded-xl">
+            New Setup
+          </button>
+        </div>
+
+        @if (setupStore.loading()) {
+          <div class="flex justify-center py-12"><div class="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div></div>
+        } @else {
+          <lib-equipment-cards
+            type="setup"
+            [items]="setupStore.items()"
+            [machines]="machineStore.items()"
+            [grinders]="grinderStore.items()"
+            (editRequested)="openEditSetup($event)"
+            (deleteRequested)="deleteSetup($event)">
+          </lib-equipment-cards>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- MACHINES TAB -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex items-center gap-2 font-black uppercase tracking-wider text-xs italic">
+          <mat-icon class="scale-90">coffee_maker</mat-icon>
+          <span>Machines</span>
+        </div>
+      </ng-template>
+      <div class="pt-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 m-0">Espresso Machines</h3>
+          <button mat-flat-button color="primary" (click)="openAddMachine()" class="uppercase tracking-widest text-xs font-black rounded-xl">
+            New Machine
+          </button>
+        </div>
+
+        @if (machineStore.loading()) {
+          <div class="flex justify-center py-12"><div class="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div></div>
+        } @else {
+          <lib-equipment-cards
+            type="machine"
+            [items]="machineStore.items()"
+            (editRequested)="openEditMachine($event)"
+            (deleteRequested)="deleteMachine($event)">
+          </lib-equipment-cards>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- GRINDERS TAB -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex items-center gap-2 font-black uppercase tracking-wider text-xs italic">
+          <mat-icon class="scale-90">ring_volume</mat-icon> <!-- representation for grinder rotation -->
+          <span>Grinders</span>
+        </div>
+      </ng-template>
+      <div class="pt-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 m-0">Coffee Grinders</h3>
+          <button mat-flat-button color="primary" (click)="openAddGrinder()" class="uppercase tracking-widest text-xs font-black rounded-xl">
+            New Grinder
+          </button>
+        </div>
+
+        @if (grinderStore.loading()) {
+          <div class="flex justify-center py-12"><div class="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div></div>
+        } @else {
+          <lib-equipment-cards
+            type="grinder"
+            [items]="grinderStore.items()"
+            (editRequested)="openEditGrinder($event)"
+            (deleteRequested)="deleteGrinder($event)">
+          </lib-equipment-cards>
+        }
+      </div>
+    </mat-tab>
+
+    <!-- WORKFLOWS TAB -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <div class="flex items-center gap-2 font-black uppercase tracking-wider text-xs italic">
+          <mat-icon class="scale-90">format_list_numbered</mat-icon>
+          <span>Workflows</span>
+        </div>
+      </ng-template>
+      <div class="pt-8">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 m-0">Pre-Extraction Workflows</h3>
+          <button mat-flat-button color="primary" (click)="openAddWorkflow()" class="uppercase tracking-widest text-xs font-black rounded-xl">
+            New Workflow
+          </button>
+        </div>
+
+        @if (workflowStore.loading()) {
+          <div class="flex justify-center py-12"><div class="w-8 h-8 border-4 border-amber-500/20 border-t-amber-500 rounded-full animate-spin"></div></div>
+        } @else {
+          <lib-equipment-cards
+            type="workflow"
+            [items]="workflowStore.items()"
+            (editRequested)="openEditWorkflow($event)"
+            (deleteRequested)="deleteWorkflow($event)">
+          </lib-equipment-cards>
+        }
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>

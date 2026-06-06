@@ -1,0 +1,110 @@
+<mat-card class="bean-card p-6 border-none shadow-sm flex flex-col justify-between transition-all duration-300 relative overflow-hidden bg-white hover:shadow-md hover:scale-[1.01] rounded-[2rem] border border-solid border-slate-50 min-h-[250px]">
+  
+  <!-- Top Badges Box -->
+  <div class="absolute right-6 top-6 flex flex-col items-end gap-1.5 select-none">
+    <!-- Active status -->
+    <div class="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-100 rounded-full"
+      [class.bg-amber-50]="coffee.active"
+      [class.border-amber-100]="coffee.active">
+      <div class="w-1.5 h-1.5 rounded-full bg-slate-300"
+        [class.bg-amber-500]="coffee.active"
+        [class.animate-pulse]="coffee.active"></div>
+      <span class="text-[8px] font-black uppercase tracking-widest text-slate-400"
+        [class.text-amber-700]="coffee.active">
+        {{ coffee.active ? 'Hopper Active' : 'Archived' }}
+      </span>
+    </div>
+
+    <!-- Roast Profile -->
+    @if (coffee.roastProfile) {
+      <span class="text-[8px] px-2.5 py-0.5 rounded-full font-black uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200/50">
+        {{ coffee.roastProfile }} Roast
+      </span>
+    }
+  </div>
+
+  <div>
+    <!-- Roaster -->
+    <h4 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-1 truncate pr-24">
+      {{ coffee.roaster || 'Unknown Roaster' }}
+    </h4>
+
+    <!-- Name -->
+    <h3 class="text-lg font-black text-slate-800 tracking-tight m-0 mb-3 truncate pr-24">
+      {{ coffee.name }}
+    </h3>
+    
+    <!-- Description -->
+    @if (coffee.description) {
+      <p class="text-xs text-slate-500 mb-3 line-clamp-2 leading-relaxed">
+        {{ coffee.description }}
+      </p>
+    }
+
+    <!-- Flavor / Tasting Notes -->
+    @if (coffee.notes) {
+      <div class="px-3.5 py-2.5 rounded-2xl border border-solid border-slate-100 bg-slate-50/50 text-xs italic text-slate-600 mb-4 leading-relaxed">
+        "{{ coffee.notes }}"
+      </div>
+    }
+
+    <!-- Target Extraction Profiles -->
+    @if (coffee.targets && coffee.targets.length > 0) {
+      <div class="space-y-2.5 mb-4 pt-3 border-t border-solid border-slate-100/60">
+        <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Target Profiles</span>
+        @for (target of coffee.targets; track target.id) {
+          <div class="flex flex-col gap-0.5 p-2 bg-slate-50/50 rounded-xl border border-solid border-slate-100/50 text-[10px]">
+            <span class="font-extrabold text-amber-700">{{ target.tasteProfile }}</span>
+            <div class="flex flex-wrap gap-x-2 gap-y-0.5 text-slate-500 font-medium">
+              @if (target.minPreinfusionTime !== null || target.maxPreinfusionTime !== null) {
+                <span>Preinfuse: <strong class="text-slate-700">{{ target.minPreinfusionTime !== null ? target.minPreinfusionTime : '?' }}-{{ target.maxPreinfusionTime !== null ? target.maxPreinfusionTime : '?' }}s</strong></span>
+              }
+              @if (target.minExtractionTime !== null || target.maxExtractionTime !== null) {
+                <span>Extract: <strong class="text-slate-700">{{ target.minExtractionTime !== null ? target.minExtractionTime : '?' }}-{{ target.maxExtractionTime !== null ? target.maxExtractionTime : '?' }}s</strong></span>
+              }
+              @if (target.minYield !== null || target.maxYield !== null) {
+                <span>Yield: <strong class="text-slate-700">{{ target.minYield !== null ? target.minYield : '?' }}-{{ target.maxYield !== null ? target.maxYield : '?' }}g</strong></span>
+              }
+              @if (target.minFlowRate !== null || target.maxFlowRate !== null) {
+                <span>Flow: <strong class="text-slate-700">{{ target.minFlowRate !== null ? target.minFlowRate : '?' }}-{{ target.maxFlowRate !== null ? target.maxFlowRate : '?' }}g/s</strong></span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Details Row (Price, URL) -->
+    <div class="space-y-1.5 text-xs text-slate-500 mb-2">
+      @if (coffee.pricePerKg) {
+        <div class="flex justify-between items-center py-0.5">
+          <span class="font-bold uppercase tracking-wider text-[9px] text-slate-400">Price per Kg:</span>
+          <span class="font-black text-slate-700">£{{ coffee.pricePerKg | number:'1.2-2' }}</span>
+        </div>
+      }
+      @if (coffee.url) {
+        <div class="flex justify-between items-center py-0.5">
+          <span class="font-bold uppercase tracking-wider text-[9px] text-slate-400">Info Link:</span>
+          <a [href]="coffee.url" target="_blank" class="text-primary hover:underline font-semibold flex items-center gap-0.5">
+            <span>Visit Roastery</span>
+            <mat-icon class="text-xs scale-75">open_in_new</mat-icon>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="pt-4 border-t border-solid border-slate-100/50 flex items-center justify-between mt-2">
+    <button mat-button color="warn" (click)="deleteRequested.emit(coffee.id)" class="uppercase tracking-widest text-[9px] font-black hover:bg-rose-50 rounded-xl px-3 flex items-center gap-1">
+      <mat-icon class="scale-75">delete</mat-icon>
+      <span>Bin</span>
+    </button>
+
+    <button mat-button color="primary" (click)="editRequested.emit(coffee)" class="uppercase tracking-widest text-[9px] font-black hover:bg-amber-50 rounded-xl px-4 flex items-center gap-1">
+      <mat-icon class="scale-75">edit</mat-icon>
+      <span>Edit</span>
+    </button>
+  </div>
+
+</mat-card>

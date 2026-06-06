@@ -1,1 +1,1 @@
-// Export ui components here
+export * from './lib/equipment-cards/equipment-cards.component';

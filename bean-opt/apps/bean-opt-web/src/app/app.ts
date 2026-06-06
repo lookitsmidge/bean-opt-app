@@ -1,12 +1,11 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-// eslint-disable-next-line @nx/enforce-module-boundaries
+import { AuthStore } from '@boa/core-auth-application';
 import { Shell, ShellNavigationButton } from '@boa/core-ui';
 
 export const SHELL_NAV_BUTTONS: ShellNavigationButton[] = [
   {
-    link: '/home',
+    link: '/dashboard',
     ariaLabel: 'Dashboard',
     svgName: 'home',
     showForAnonymous: true,
@@ -33,6 +32,7 @@ export const SHELL_NAV_BUTTONS: ShellNavigationButton[] = [
 })
 export class App {
   protected title = 'BeanOpt Web';
+  protected readonly auth = inject(AuthStore);
 
   // private routeSnapshotData = toSignal()
   protected shellNavigationButtons = computed(() => {

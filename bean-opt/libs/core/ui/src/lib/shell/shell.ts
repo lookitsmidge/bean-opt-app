@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { SidebarComponent } from './sidebar';
+import { AuthUser } from '@boa/core-auth-domain'
 
 export enum ShellNavigationDisplayMode {
   SHOW_ON_ALL = 'SHOW_ON_ALL',
@@ -20,12 +21,12 @@ export interface ShellNavigationButton {
   displayMode?: ShellNavigationDisplayMode;
 }
 
-export interface AuthUser {
-  displayName?: string;
-  email?: string;
-  photoUrl?: string;
-  isAnonymous?: boolean;
-}
+// export interface AuthUser {
+//   displayName?: string;
+//   email?: string;
+//   photoUrl?: string;
+//   isAnonymous?: boolean;
+// }
 
 @Component({
   selector: 'lib-shell',

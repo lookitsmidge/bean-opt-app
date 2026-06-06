@@ -4,7 +4,7 @@
   "sourceRoot": "libs/features/readings/data-access/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["scope:features/readings", "type:data-access"],
+  "tags": ["scope:shop", "type:data-access"],
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",

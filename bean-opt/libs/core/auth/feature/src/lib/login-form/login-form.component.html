@@ -1,169 +1,169 @@
-<div class="w-full max-w-2xl bg-white rounded-[3.5rem] shadow-2xl overflow-hidden border border-slate-100 animate-in duration-700">
+<div class="w-full max-w-md md:max-w-4xl bg-[color-mix(in_srgb,var(--mat-sys-surface-container)_60%,transparent)] rounded-[2.5rem] shadow-2xl overflow-hidden border border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_15%,transparent)] backdrop-blur-xl flex flex-col md:flex-row animate-in duration-700">
   
-  <!-- Top Section: Branding (Full Width) -->
-  <div class="bg-slate-900 relative p-12 overflow-hidden border-b border-slate-800">
+  <!-- Branding Panel (Left on Desktop / Top on Mobile) -->
+  <div class="bg-[color-mix(in_srgb,var(--mat-sys-surface-container-high)_80%,transparent)] relative p-6 md:p-12 overflow-hidden border-b md:border-b-0 md:border-r border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_15%,transparent)] flex flex-row md:flex-col justify-between items-center md:items-start w-full md:w-5/12 md:min-h-[550px] flex-shrink-0">
     <!-- Decorative Blurs -->
-    <div class="absolute -right-10 -top-10 w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl"></div>
-    
-    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-      <div class="flex items-center gap-6">
-        <div class="animate-float">
-          <img src="./WFindex_logo.png" alt="WFi Logo" class="w-20 h-auto drop-shadow-[0_0_20px_rgba(79,70,229,0.3)]">
+    <div class="absolute -right-10 -top-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+    <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-amber-600/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-8 w-full">
+      <div class="flex items-center md:flex-col md:items-start gap-4 md:gap-6">
+        <div class="animate-float flex-shrink-0">
+          <div class="logo-box w-10 h-10 md:w-16 md:h-16 rounded-[1.25rem] flex items-center justify-center">
+            @if (logoSrc()) {
+              <img [src]="logoSrc()" class="w-full h-full object-cover" alt="BeanOpt Logo" />
+            } @else {
+              <mat-icon class="logo-icon scale-125 md:scale-[1.75]">coffee</mat-icon>
+            }
+          </div>
         </div>
         <div>
-          <h2 class="text-3xl font-black italic tracking-tighter text-white uppercase leading-none mb-1">
-            Archival <span class="text-indigo-400">Protocol</span>
+          <h2 class="text-lg md:text-3xl font-black italic tracking-tighter text-[var(--mat-sys-on-surface)] uppercase leading-none mb-1">
+            Bean<span class="text-amber-500">Opt</span>
           </h2>
-          <p class="text-slate-400 text-[9px] font-black uppercase tracking-[0.4em] leading-relaxed">
-            Secure Digital Ledger // v1.0.2
+          <p class="text-[var(--mat-sys-on-surface-variant)] text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] leading-relaxed">
+            Supabase Auth
           </p>
         </div>
       </div>
+    </div>
 
-      <div class="hidden sm:flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
-        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
-        <span class="text-[8px] font-black uppercase tracking-widest text-emerald-400/80">System Live</span>
-      </div>
+    <!-- System Live Badge (Desktop Only) -->
+    <div class="hidden md:flex relative z-10 items-center gap-2 px-4 py-2 bg-[color-mix(in_srgb,var(--mat-sys-on-surface)_6%,transparent)] backdrop-blur-md rounded-2xl border border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_30%,transparent)] mt-auto">
+      <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></div>
+      <span class="text-[8px] font-black uppercase tracking-widest text-emerald-600">System Live</span>
     </div>
   </div>
 
-  <!-- Bottom Section: Auth Form -->
-  <div class="p-8 sm:p-12 lg:p-16">
+  <!-- Form Panel (Right on Desktop / Bottom on Mobile) -->
+  <div class="flex-1 p-8 md:p-12 flex flex-col justify-center bg-[color-mix(in_srgb,var(--mat-sys-surface-container-low)_60%,transparent)]">
     
     <!-- Header -->
-    <div class="mb-10 text-center sm:text-left">
-      <h3 class="text-3xl font-black italic tracking-tighter text-slate-900 uppercase leading-none mb-2">
-        {{ mode() === 'login' ? 'Initialize' : 'Register' }}
+    <div class="mb-8 text-center md:text-left">
+      <h3 class="text-2xl md:text-3xl font-black italic tracking-tighter text-[var(--mat-sys-on-surface)] uppercase leading-none mb-2">
+        {{ mode() === 'login' ? 'Log In' : 'Register' }}
       </h3>
-      <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">
-        {{ mode() === 'login' ? 'Authentication Required' : 'New Collector Protocol' }}
+      <p class="text-[var(--mat-sys-on-surface-variant)] text-[9px] md:text-[10px] font-black uppercase tracking-widest">
+        {{ mode() === 'login' ? 'Authentication Required' : 'Create new Account' }}
       </p>
     </div>
 
     <!-- Social Login -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+    <div class="mb-6">
       <button 
         (click)="googleLogin.emit()"
-        class="sm:col-span-2 py-4 px-6 bg-white border-2 border-slate-100 rounded-2xl flex items-center justify-center gap-4 hover:border-indigo-100 hover:bg-slate-50 transition-all active:scale-95 group shadow-sm">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-5 h-5">
-        <span class="text-[10px] font-black uppercase tracking-widest text-slate-600 group-hover:text-indigo-600">Continue with Google</span>
+        type="button"
+        class="w-full py-3.5 px-6 bg-[var(--mat-sys-surface)] cursor-pointer border border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_40%,transparent)] rounded-2xl flex items-center justify-center gap-4 hover:bg-[color-mix(in_srgb,var(--mat-sys-primary)_8%,transparent)] transition-all active:scale-[0.98] group shadow-sm">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
+          <path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.67 1.58 15 1 12 1 7.35 1 3.4 3.65 1.5 7.5l3.86 3C6.27 7.58 8.92 5.04 12 5.04z"/>
+          <path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.28 1.48-1.12 2.74-2.38 3.58l3.7 2.87c2.16-1.99 3.41-4.91 3.41-8.6z"/>
+          <path fill="#FBBC05" d="M5.36 14.5c-.24-.72-.38-1.49-.38-2.3s.14-1.58.38-2.3L1.5 6.9C.54 8.82 0 10.98 0 13.2s.54 4.38 1.5 6.3l3.86-3z"/>
+          <path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.7-2.87c-1.12.75-2.55 1.2-4.26 1.2-3.08 0-5.73-2.54-6.64-5.46L1.5 16.9C3.4 20.75 7.35 23 12 23z"/>
+        </svg>
+        <span class="text-[10px] font-black uppercase tracking-widest text-[var(--mat-sys-on-surface-variant)] group-hover:text-[var(--mat-sys-primary)]">Continue with Google</span>
       </button>
     </div>
 
-    <div class="flex items-center gap-4 text-slate-300 mb-10">
-      <div class="h-[1px] flex-1 bg-slate-100"></div>
-      <span class="text-[8px] font-black uppercase tracking-widest italic">Encrypted Channel</span>
-      <div class="h-[1px] flex-1 bg-slate-100"></div>
+    <div class="flex items-center gap-4 text-[var(--mat-sys-outline-variant)] mb-6">
+      <div class="h-[1px] flex-1 bg-[var(--mat-sys-outline-variant)] opacity-20"></div>
+      <span class="text-[8px] font-black uppercase tracking-widest italic text-[var(--mat-sys-on-surface-variant)] opacity-50">Encrypted Channel</span>
+      <div class="h-[1px] flex-1 bg-[var(--mat-sys-outline-variant)] opacity-20"></div>
     </div>
 
     <!-- Email Form -->
-    <form [formGroup]="authForm" (ngSubmit)="processForm()" class="space-y-6">
+    <form [formGroup]="authForm" (ngSubmit)="processForm()" class="space-y-4">
       
       <!-- Error Display -->
       @if (authStore.error()) {
-        <div class="p-4 bg-rose-50 border-2 border-rose-100 rounded-2xl animate-in">
-          <p class="text-[10px] font-black uppercase tracking-widest text-rose-600 text-center">
+        <div class="p-4 bg-[color-mix(in_srgb,var(--mat-sys-error-container)_20%,transparent)] border border-[color-mix(in_srgb,var(--mat-sys-error-container)_40%,transparent)] rounded-2xl animate-in">
+          <p class="text-[10px] font-black uppercase tracking-widest text-[var(--mat-sys-error)] text-center">
             {{ authStore.error() }}
           </p>
         </div>
       }
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="flex flex-col gap-4">
         @if (mode() === 'signup') {
-          <div class="space-y-1.5 animate-in md:col-span-2">
-            <label for="displayName" class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-4">Full Name</label>
+          <mat-form-field appearance="outline" class="w-full animate-in">
+            <mat-label>Full Name</mat-label>
             <input 
+              matInput
               id="displayName"
               type="text" 
               formControlName="displayName"
-              placeholder="John Doe"
-              class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-500/20 outline-none transition-all shadow-inner"
-              [class.border-red-200]="isFieldInvalid('displayName')">
-            @if (isFieldInvalid('displayName')) {
-              <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mt-1 ml-4 animate-in">
-                Full Name Required
-              </p>
-            }
-          </div>
+              placeholder="John Doe">
+            <mat-error>Full Name is required</mat-error>
+          </mat-form-field>
         }
 
-        <div class="space-y-1.5 md:col-span-2">
-          <label for="email" class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-4">Email Address</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email Address</mat-label>
           <input 
+            matInput
             id="email"
             type="email" 
             formControlName="email"
-            placeholder="operator@wfindex.com"
-            class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-500/20 outline-none transition-all shadow-inner"
-            [class.border-red-200]="isFieldInvalid('email')">
-          @if (isFieldInvalid('email')) {
-            <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mt-1 ml-4 animate-in">
-              @if (authForm.get('email')?.hasError('required')) {
-                Email Address Required
-              } @else if (authForm.get('email')?.hasError('email')) {
-                Invalid Protocol Address (Email)
-              }
-            </p>
-          }
-        </div>
+            placeholder="operator@beanopt.com">
+          <mat-error>
+            @if (authForm.get('email')?.hasError('required')) {
+              Email Address is required
+            } @else if (authForm.get('email')?.hasError('email')) {
+              Invalid email address
+            }
+          </mat-error>
+        </mat-form-field>
 
-        <div class="space-y-1.5" [class.md:col-span-2]="mode() === 'login'">
-          <label for="password" class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-4">Access Key</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Password</mat-label>
           <input 
+            matInput
             id="password"
             type="password" 
             formControlName="password"
-            placeholder="••••••••"
-            class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-500/20 outline-none transition-all shadow-inner"
-            [class.border-red-200]="isFieldInvalid('password')">
-          @if (isFieldInvalid('password')) {
-            <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mt-1 ml-4 animate-in">
-              @if (authForm.get('password')?.hasError('required')) {
-                Access Key Required
-              } @else if (authForm.get('password')?.hasError('minlength')) {
-                Minimum 6 Characters Required
-              }
-            </p>
-          }
-        </div>
+            placeholder="••••••••">
+          <mat-error>
+            @if (authForm.get('password')?.hasError('required')) {
+              Password is required
+            } @else if (authForm.get('password')?.hasError('minlength')) {
+              Minimum 6 characters required
+            }
+          </mat-error>
+        </mat-form-field>
 
         @if (mode() === 'signup') {
-          <div class="space-y-1.5 animate-in">
-            <label for="confirmPassword" class="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-4">Confirm Key</label>
+          <mat-form-field appearance="outline" class="w-full animate-in">
+            <mat-label>Confirm Password</mat-label>
             <input 
+              matInput
               id="confirmPassword"
               type="password" 
               formControlName="confirmPassword"
-              placeholder="••••••••"
-              class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-sm font-bold focus:bg-white focus:border-indigo-500/20 outline-none transition-all shadow-inner"
-              [class.border-red-200]="isPasswordMismatch()">
-            @if (isPasswordMismatch()) {
-              <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mt-1 ml-4 animate-in">
-                Keys Do Not Match
-              </p>
-            }
-          </div>
+              placeholder="••••••••">
+            <mat-error>
+              @if (isPasswordMismatch()) {
+                Keys do not match
+              }
+            </mat-error>
+          </mat-form-field>
 
-          <div class="md:col-span-2 mt-4">
+          <div class="mt-2">
             <label class="flex items-start gap-4 cursor-pointer group">
               <div class="relative flex items-center h-5">
                 <input 
                   id="privacyPolicyAccepted"
                   type="checkbox" 
                   formControlName="privacyPolicyAccepted"
-                  class="peer h-5 w-5 rounded-lg border-2 border-slate-200 bg-white checked:bg-indigo-600 checked:border-indigo-600 transition-all outline-none appearance-none cursor-pointer">
-                <svg class="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 pointer-events-none left-1 mt-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  class="peer h-5 w-5 rounded-lg border border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_50%,transparent)] bg-[var(--mat-sys-surface)] checked:bg-[var(--mat-sys-primary)] checked:border-[var(--mat-sys-primary)] transition-all outline-none appearance-none cursor-pointer">
+                <svg class="absolute w-3 h-3 text-[var(--mat-sys-on-primary)] opacity-0 peer-checked:opacity-100 pointer-events-none left-1 mt-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
               </div>
               <div class="flex-1">
-                <p class="text-[9px] font-black uppercase tracking-widest text-slate-500 group-hover:text-slate-700 transition-colors leading-relaxed">
+                <p class="text-[9px] font-black uppercase tracking-widest text-[var(--mat-sys-on-surface-variant)] group-hover:text-[var(--mat-sys-on-surface)] transition-colors leading-relaxed">
                   I have read and agree to the 
-                  <a href="/privacy-policy" target="_blank" class="text-indigo-600 hover:underline" (click)="$event.stopPropagation()">Privacy Policy</a> 
+                  <a routerLink="/privacy-policy" class="text-[var(--mat-sys-primary)] hover:underline" (click)="$event.stopPropagation()">Privacy Policy</a> 
                   and 
-                  <a href="/terms-and-conditions" target="_blank" class="text-indigo-600 hover:underline" (click)="$event.stopPropagation()">Terms & Conditions</a>
+                  <a routerLink="/terms-and-conditions" class="text-[var(--mat-sys-primary)] hover:underline" (click)="$event.stopPropagation()">Terms & Conditions</a>
                 </p>
                 @if (authForm.get('privacyPolicyAccepted')?.touched && !authForm.get('privacyPolicyAccepted')?.value) {
-                  <p class="text-[8px] font-black uppercase tracking-widest text-red-500 mt-1">Acceptance Required to Proceed</p>
+                  <p class="text-[8px] font-black uppercase tracking-widest text-[var(--mat-sys-error)] mt-1">Acceptance Required to Proceed</p>
                 }
               </div>
             </label>
@@ -171,11 +171,11 @@
         }
       </div>
 
-      <div class="pt-6">
+      <div class="pt-4">
         <button 
           type="submit"
-          [disabled]="isLoading()"
-          class="w-full py-5 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest italic hover:bg-indigo-600 transition-all active:scale-95 shadow-xl shadow-slate-200 flex items-center justify-center gap-3">
+          [disabled]="isLoading() || authForm.invalid"
+          class="w-full py-4 bg-[var(--mat-sys-primary)] hover:bg-[color-mix(in_srgb,var(--mat-sys-primary)_90%,black)] text-[var(--mat-sys-on-primary)] disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-lg shadow-[var(--mat-sys-primary)]/10 cursor-pointer">
           @if (isLoading()) {
             <div class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
             <span>Processing...</span>
@@ -187,17 +187,19 @@
     </form>
 
     <!-- Footer Actions -->
-    <div class="mt-10 pt-8 border-t border-slate-50 text-center sm:flex sm:items-center sm:justify-between">
+    <div class="mt-8 pt-6 border-t border-[color-mix(in_srgb,var(--mat-sys-outline-variant)_20%,transparent)] text-center sm:flex sm:items-center sm:justify-between gap-4">
       <button 
+        type="button"
         (click)="toggleMode.emit(mode() === 'login' ? 'signup' : 'login')"
-        class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-colors">
+        class="text-[10px] font-black uppercase tracking-widest text-[var(--mat-sys-on-surface-variant)] hover:text-[var(--mat-sys-primary)] transition-colors cursor-pointer">
         {{ mode() === 'login' ? "Don't have an account? Register" : "Already registered? Sign In" }}
       </button>
       
-      <div class="mt-6 sm:mt-0">
+      <div class="mt-4 sm:mt-0">
         <button 
+          type="button"
           (click)="guestLogin.emit()"
-          class="px-6 py-2 bg-slate-100 hover:bg-slate-200 text-slate-500 rounded-full text-[8px] font-black uppercase tracking-widest transition-all">
+          class="px-6 py-2 bg-[color-mix(in_srgb,var(--mat-sys-on-surface)_8%,transparent)] hover:bg-[color-mix(in_srgb,var(--mat-sys-on-surface)_15%,transparent)] text-[var(--mat-sys-on-surface-variant)] rounded-full text-[8px] font-black uppercase tracking-widest transition-all cursor-pointer">
           Continue as Guest
         </button>
       </div>

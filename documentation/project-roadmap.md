@@ -79,8 +79,19 @@ _to be completed in time_
 
 ## Backlog:
 
-- **Espresso Readings Enhancements**:
-  - Allow user to select which coffee bean they used for the extraction.
-  - Allow user to configure their setup, add multiple setups, and select a setup when performing a reading (defaulting to the last one used).
-  - Allow user to rate their espresso shot out of 5 stars.
-  - Allow user to rate shot extraction quality via a sliding acidity/burned scale (under-extracted - gold zone - over-extracted).
+- **Espresso Readings & Lap Timer Enhancements**:
+  - `[ ]` Integrate pre-infusion and extraction lap timer in stopwatch UI
+  - `[ ]` Allow user to select coffee bean used for extraction (referencing `coffees` table)
+  - `[ ]` Allow user to select equipment setup used for extraction (referencing `setups` table, defaulting to last one used)
+  - `[ ]` Support star rating (0-5 stars)
+  - `[ ]` Support flavor balance rating slider (1-10 range for under-extracted, balanced, over-extracted)
+  
+- **Bean Management Features**:
+  - `[ ]` Database migration and UI elements for logging beans (brands, roaster, roastery, roast date, remaining bag weight, bag photo/upload, shopping URLs/links)
+  - `[ ]` Create database schema and UI elements for coffee target ranges (specifying upper/lower bounds for yields, extraction times, and flow rates)
+  
+- **Workflow Management Features**:
+  - `[ ]` Database migration and UI elements to add/edit workflows and their steps (ordered sequence with 'Stage: Before | During | After', content, and 'Important' highlighting flag)
+
+- **Equipment & Setup Management Features**:
+  - `[ ]` Database migrations and UI elements to add/edit setups, coffee machines, coffee grinders, and custom equipment (portafilters, baskets, shakers, WDT)

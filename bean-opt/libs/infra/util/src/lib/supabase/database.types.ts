@@ -52,40 +52,275 @@ export type Database = {
         }
         Relationships: []
       }
-      espresso_readings: {
+      coffee_equipments: {
         Row: {
-          coffee_mass: number
+          active: boolean
           created_at: string
-          extraction_time: number
           id: string
-          notes: string | null
+          name: string
+          type: string
           user_id: string
-          water_mass: number
         }
         Insert: {
-          coffee_mass: number
+          active?: boolean
           created_at?: string
-          extraction_time: number
           id?: string
-          notes?: string | null
+          name: string
+          type: string
           user_id: string
-          water_mass: number
         }
         Update: {
-          coffee_mass?: number
+          active?: boolean
           created_at?: string
-          extraction_time?: number
           id?: string
-          notes?: string | null
+          name?: string
+          type?: string
           user_id?: string
-          water_mass?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "coffee_equipments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coffee_grinders: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          model: string | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          model?: string | null
+          name: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          model?: string | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coffee_grinders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coffee_machines: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          model: string | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          model?: string | null
+          name: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          model?: string | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coffee_machines_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coffee_targets: {
+        Row: {
+          coffee_id: string
+          created_at: string
+          id: string
+          max_extraction_time: number | null
+          max_flow_rate: number | null
+          max_yield: number | null
+          min_extraction_time: number | null
+          min_flow_rate: number | null
+          min_yield: number | null
+        }
+        Insert: {
+          coffee_id: string
+          created_at?: string
+          id?: string
+          max_extraction_time?: number | null
+          max_flow_rate?: number | null
+          max_yield?: number | null
+          min_extraction_time?: number | null
+          min_flow_rate?: number | null
+          min_yield?: number | null
+        }
+        Update: {
+          coffee_id?: string
+          created_at?: string
+          id?: string
+          max_extraction_time?: number | null
+          max_flow_rate?: number | null
+          max_yield?: number | null
+          min_extraction_time?: number | null
+          min_flow_rate?: number | null
+          min_yield?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coffee_targets_coffee_id_fkey"
+            columns: ["coffee_id"]
+            isOneToOne: false
+            referencedRelation: "coffees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coffees: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          notes: string | null
+          roast_date: string | null
+          roaster: string | null
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          notes?: string | null
+          roast_date?: string | null
+          roaster?: string | null
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          roast_date?: string | null
+          roaster?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coffees_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      espresso_readings: {
+        Row: {
+          coffee_id: string | null
+          coffee_mass_in: number
+          comments: string
+          created_at: string
+          extraction_time: number
+          flavour_balance: number
+          flow_rate: number
+          id: string
+          preinfusion_time: number
+          rating: number
+          setup_id: string | null
+          total_yield: number
+          user_id: string
+          warming_shot: boolean
+          workflow_id: string | null
+        }
+        Insert: {
+          coffee_id?: string | null
+          coffee_mass_in: number
+          comments?: string
+          created_at?: string
+          extraction_time?: number
+          flavour_balance: number
+          flow_rate: number
+          id?: string
+          preinfusion_time?: number
+          rating?: number
+          setup_id?: string | null
+          total_yield: number
+          user_id: string
+          warming_shot?: boolean
+          workflow_id?: string | null
+        }
+        Update: {
+          coffee_id?: string | null
+          coffee_mass_in?: number
+          comments?: string
+          created_at?: string
+          extraction_time?: number
+          flavour_balance?: number
+          flow_rate?: number
+          id?: string
+          preinfusion_time?: number
+          rating?: number
+          setup_id?: string | null
+          total_yield?: number
+          user_id?: string
+          warming_shot?: boolean
+          workflow_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "espresso_readings_coffee_id_fkey"
+            columns: ["coffee_id"]
+            isOneToOne: false
+            referencedRelation: "coffees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "espresso_readings_setup_id_fkey"
+            columns: ["setup_id"]
+            isOneToOne: false
+            referencedRelation: "setups"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "espresso_readings_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "espresso_readings_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
             referencedColumns: ["id"]
           },
         ]
@@ -126,6 +361,88 @@ export type Database = {
         }
         Relationships: []
       }
+      setup_equipments: {
+        Row: {
+          equipment_id: string
+          setup_id: string
+        }
+        Insert: {
+          equipment_id: string
+          setup_id: string
+        }
+        Update: {
+          equipment_id?: string
+          setup_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "setup_equipments_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "coffee_equipments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "setup_equipments_setup_id_fkey"
+            columns: ["setup_id"]
+            isOneToOne: false
+            referencedRelation: "setups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      setups: {
+        Row: {
+          active: boolean
+          created_at: string
+          grinder_id: string | null
+          id: string
+          machine_id: string | null
+          name: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          grinder_id?: string | null
+          id?: string
+          machine_id?: string | null
+          name: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          grinder_id?: string | null
+          id?: string
+          machine_id?: string | null
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "setups_grinder_id_fkey"
+            columns: ["grinder_id"]
+            isOneToOne: false
+            referencedRelation: "coffee_grinders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "setups_machine_id_fkey"
+            columns: ["machine_id"]
+            isOneToOne: false
+            referencedRelation: "coffee_machines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "setups_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -155,6 +472,79 @@ export type Database = {
           },
           {
             foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflow_steps: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          important: boolean
+          stage: string
+          step_number: number
+          workflow_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          important?: boolean
+          stage: string
+          step_number: number
+          workflow_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          important?: boolean
+          stage?: string
+          step_number?: number
+          workflow_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflow_steps_workflow_id_fkey"
+            columns: ["workflow_id"]
+            isOneToOne: false
+            referencedRelation: "workflows"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      workflows: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "workflows_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

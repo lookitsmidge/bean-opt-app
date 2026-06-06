@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 import { RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthUser, ShellNavigationButton, ShellNavigationDisplayMode } from './shell';
+import { ShellNavigationButton, ShellNavigationDisplayMode } from './shell';
+import { AuthUser } from '@boa/core-auth-domain'
 
 @Component({
   selector: 'lib-sidebar',

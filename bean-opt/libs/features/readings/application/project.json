@@ -4,7 +4,7 @@
   "sourceRoot": "libs/features/readings/application/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["scope:features/readings", "type:application"],
+  "tags": ["scope:shop", "type:application"],
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",

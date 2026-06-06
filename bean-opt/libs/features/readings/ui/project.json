@@ -4,7 +4,7 @@
   "sourceRoot": "libs/features/readings/ui/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["scope:features/readings", "type:ui"],
+  "tags": ["scope:shop", "type:ui"],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"

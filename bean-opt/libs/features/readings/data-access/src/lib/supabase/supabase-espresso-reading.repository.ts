@@ -44,15 +44,27 @@ export class SupabaseEspressoReadingRepository implements IEspressoReadingReposi
   }
 
   async saveReading(reading: EspressoReading): Promise<void> {
+    const calculatedFlowRate = reading.extractionTime > 0
+      ? Number((reading.totalYield / reading.extractionTime).toFixed(3))
+      : 0;
+
     const { error } = await this.supabase
       .from('espresso_readings')
       .upsert({
         id: reading.id,
         user_id: reading.userId,
-        coffee_mass: reading.coffeeMass,
-        water_mass: reading.waterMass,
+        coffee_id: reading.coffeeId,
+        workflow_id: reading.workflowId,
+        setup_id: reading.setupId,
+        coffee_mass_in: reading.coffeeMassIn,
+        warming_shot: reading.warmingShot,
+        preinfusion_time: reading.preinfusionTime,
         extraction_time: reading.extractionTime,
-        notes: reading.notes,
+        total_yield: reading.totalYield,
+        flow_rate: calculatedFlowRate,
+        flavour_balance: reading.flavourBalance,
+        rating: reading.rating,
+        comments: reading.comments,
         created_at: reading.createdAt,
       });
 
@@ -72,10 +84,18 @@ export class SupabaseEspressoReadingRepository implements IEspressoReadingReposi
     return {
       id: row.id,
       userId: row.user_id,
-      coffeeMass: Number(row.coffee_mass),
-      waterMass: Number(row.water_mass),
+      coffeeId: row.coffee_id,
+      workflowId: row.workflow_id,
+      setupId: row.setup_id,
+      coffeeMassIn: Number(row.coffee_mass_in),
+      warmingShot: Boolean(row.warming_shot),
+      preinfusionTime: Number(row.preinfusion_time),
       extractionTime: Number(row.extraction_time),
-      notes: row.notes || undefined,
+      totalYield: Number(row.total_yield),
+      flowRate: Number(row.flow_rate),
+      flavourBalance: Number(row.flavour_balance),
+      rating: Number(row.rating),
+      comments: row.comments,
       createdAt: row.created_at,
     };
   }

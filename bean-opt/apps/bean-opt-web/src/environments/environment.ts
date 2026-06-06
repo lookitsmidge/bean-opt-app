@@ -5,6 +5,6 @@ export const environment: AppConfig = {
     appId: 'bean-opt-web',
     supabaseConfig: {
         supabaseUrl: 'http://127.0.0.1:54321',
-        supabaseKey: 'your-supabase-key'
+        supabaseKey: 'sb_publishable_ACJWlzQHlZjBrEguHvfOxg_3BJgxAaH'
     }
 }

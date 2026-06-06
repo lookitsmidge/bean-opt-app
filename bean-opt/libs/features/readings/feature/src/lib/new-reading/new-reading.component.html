@@ -14,48 +14,114 @@
         <div class="absolute -top-24 -right-24 w-48 h-48 bg-amber-500/10 blur-[80px] rounded-full"></div>
         <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-700/10 blur-[80px] rounded-full"></div>
 
-        <!-- Glow Ring & Timer -->
-        <div class="w-48 h-48 rounded-full border-4 border-slate-100 flex flex-col items-center justify-center shadow-inner relative mb-6"
-             [class.border-amber-500]="timerActive()"
-             [class.shadow-[0_0_20px_rgba(245,158,11,0.2)]]="timerActive()"
-             class="transition-all duration-500">
-            <span class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-1">Extraction Time</span>
-            <span class="text-5xl font-black tracking-tighter text-slate-900 font-mono">
-                {{ timerSeconds().toFixed(1) }}s
-            </span>
-            <span class="text-[9px] font-bold text-amber-600 uppercase tracking-widest mt-1" [class.animate-pulse]="timerActive()">
-                {{ timerActive() ? 'Logging...' : 'Ready' }}
-            </span>
+        <!-- Dual Timers Grid -->
+        <div class="grid grid-cols-2 gap-6 w-full mb-6 relative z-10">
+            <!-- Preinfusion Timer -->
+            <div class="flex flex-col items-center p-4 bg-slate-50 border border-slate-100 rounded-3xl"
+                 [class.border-amber-500]="timerActive() && !lapActive()"
+                 [class.bg-amber-50/20]="timerActive() && !lapActive()">
+                <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1">Preinfusion</span>
+                <span class="text-3xl font-black tracking-tight text-slate-800 font-mono">
+                    {{ preinfusionTime().toFixed(1) }}s
+                </span>
+                @if (timerActive() && !lapActive()) {
+                    <span class="text-[8px] font-bold text-amber-600 uppercase tracking-widest mt-1 animate-pulse">Preinfusing...</span>
+                }
+            </div>
+
+            <!-- Extraction Timer -->
+            <div class="flex flex-col items-center p-4 bg-slate-50 border border-slate-100 rounded-3xl"
+                 [class.border-emerald-500]="timerActive() && lapActive()"
+                 [class.bg-emerald-50/20]="timerActive() && lapActive()">
+                <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1">Extraction</span>
+                <span class="text-3xl font-black tracking-tight text-slate-800 font-mono">
+                    {{ extractionTime().toFixed(1) }}s
+                </span>
+                @if (timerActive() && lapActive()) {
+                    <span class="text-[8px] font-bold text-emerald-600 uppercase tracking-widest mt-1 animate-pulse">Extracting...</span>
+                }
+            </div>
         </div>
 
         <!-- Timer Action buttons -->
-        <div class="flex items-center gap-3 w-full">
+        <div class="flex items-center gap-3 w-full relative z-10">
             <button (click)="resetTimer()"
                 class="flex-1 py-3 text-xs font-black uppercase tracking-wider bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 rounded-2xl transition-all border border-slate-200/40">
                 Reset
             </button>
+            
             @if (!timerActive()) {
                 <button (click)="startTimer()"
                     class="flex-[2] py-3 text-xs font-black uppercase tracking-wider bg-amber-500 hover:bg-amber-600 active:scale-95 text-white rounded-2xl transition-all shadow-md shadow-amber-500/20">
                     Start Timer
                 </button>
             } @else {
-                <button (click)="pauseTimer()"
-                    class="flex-[2] py-3 text-xs font-black uppercase tracking-wider bg-slate-900 hover:bg-slate-800 active:scale-95 text-white rounded-2xl transition-all shadow-lg">
-                    Pause
-                </button>
+                <div class="flex-[2] flex gap-2">
+                    @if (!lapActive()) {
+                        <button (click)="lap()"
+                            class="flex-1 py-3 text-xs font-black uppercase tracking-wider bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-2xl transition-all shadow-md">
+                            Lap (Extract)
+                        </button>
+                    }
+                    <button (click)="pauseTimer()"
+                        class="flex-1 py-3 text-xs font-black uppercase tracking-wider bg-slate-900 hover:bg-slate-800 active:scale-95 text-white rounded-2xl transition-all shadow-lg">
+                        Pause
+                    </button>
+                </div>
             }
         </div>
     </div>
 
     <!-- Inputs Form -->
     <div class="bg-white rounded-[2.5rem] border border-black/[0.03] shadow-xl p-8 space-y-6 mb-8">
-        <div class="grid grid-cols-2 gap-4">
+        <!-- Relational Dropdowns -->
+        <div class="space-y-4">
+            <!-- Coffee Bean Select -->
+            <div>
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="coffee-bean-select">Coffee Bean</label>
+                <select id="coffee-bean-select" [(ngModel)]="coffeeId"
+                    class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer">
+                    <option [value]="null">No Bean Selected</option>
+                    @for (coffee of coffeesList(); track coffee.id) {
+                        <option [value]="coffee.id">{{ coffee.name }} ({{ coffee.roaster }})</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Setup & Workflow Grid -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Setup Select -->
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="setup-select">Setup</label>
+                    <select id="setup-select" [(ngModel)]="setupId"
+                        class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer">
+                        <option [value]="null">No Setup</option>
+                        @for (setup of setupsList(); track setup.id) {
+                            <option [value]="setup.id">{{ setup.name }}</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Workflow Select -->
+                <div>
+                    <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="workflow-select">Workflow</label>
+                    <select id="workflow-select" [(ngModel)]="workflowId"
+                        class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all appearance-none cursor-pointer">
+                        <option [value]="null">No Workflow</option>
+                        @for (workflow of workflowsList(); track workflow.id) {
+                            <option [value]="workflow.id">{{ workflow.name }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4">
             <!-- Coffee Dose -->
             <div>
-                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Coffee Dose (In)</label>
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="coffee-dose-input">Coffee Dose (In)</label>
                 <div class="relative flex items-center">
-                    <input type="number" step="0.1" [(ngModel)]="coffeeMass" 
+                    <input id="coffee-dose-input" type="number" step="0.1" [(ngModel)]="coffeeMassIn" 
                         class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all pr-12">
                     <span class="absolute right-4 text-xs font-black text-slate-400 uppercase">G</span>
                 </div>
@@ -63,19 +129,74 @@
 
             <!-- Beverage Yield -->
             <div>
-                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Yield (Out)</label>
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="yield-input">Yield (Out)</label>
                 <div class="relative flex items-center">
-                    <input type="number" step="0.1" [(ngModel)]="waterMass" 
+                    <input id="yield-input" type="number" step="0.1" [(ngModel)]="totalYield" 
                         class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-bold focus:bg-white focus:border-amber-500 outline-none transition-all pr-12">
                     <span class="absolute right-4 text-xs font-black text-slate-400 uppercase">G</span>
                 </div>
             </div>
         </div>
 
-        <!-- Notes -->
-        <div>
-            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Extraction Notes</label>
-            <textarea [(ngModel)]="notes" rows="3" placeholder="Describe the taste profile, channel checks, roast age..."
+        <!-- Warming Shot Toggle -->
+        <div class="flex items-center justify-between bg-slate-50 border border-slate-100 p-4 rounded-3xl">
+            <div class="flex flex-col">
+                <span class="text-xs font-black text-slate-700 uppercase tracking-wide">Warming Shot</span>
+                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Ran a blank group flush before shot</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" [(ngModel)]="warmingShot" class="sr-only peer">
+                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+            </label>
+        </div>
+
+        <!-- Flavor Balance Slider -->
+        <div class="border-t border-slate-100 pt-4">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400" for="flavour-balance-slider">Flavour Balance (1-10)</label>
+                <span class="text-xs font-black uppercase tracking-wider"
+                      [class.text-blue-500]="flavourBalance() <= 3"
+                      [class.text-emerald-500]="flavourBalance() >= 4 && flavourBalance() <= 6"
+                      [class.text-rose-500]="flavourBalance() >= 7">
+                    @if (flavourBalance() <= 3) {
+                        Under-extracted (Sour)
+                    } @else if (flavourBalance() >= 4 && flavourBalance() <= 6) {
+                        Gold Zone (Balanced)
+                    } @else {
+                        Over-extracted (Bitter)
+                    }
+                    ({{ flavourBalance() }})
+                </span>
+            </div>
+            <input id="flavour-balance-slider" type="range" min="1" max="10" step="1" [(ngModel)]="flavourBalance"
+                class="w-full accent-amber-500 cursor-pointer h-2 bg-slate-100 rounded-lg appearance-none">
+            <div class="flex justify-between text-[8px] font-black uppercase text-slate-400 mt-1">
+                <span>Sour (1)</span>
+                <span class="text-emerald-500">Gold Zone (4-6)</span>
+                <span>Bitter (10)</span>
+            </div>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="border-t border-slate-100 pt-4 flex flex-col items-center">
+            <span class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Shot Quality Rating</span>
+            <div class="flex gap-2">
+                @for (star of [1,2,3,4,5]; track star) {
+                    <button type="button" (click)="rating.set(star)" class="text-3xl transition-transform active:scale-90 outline-none">
+                        @if (star <= rating()) {
+                            <span class="text-amber-500">★</span>
+                        } @else {
+                            <span class="text-slate-200 hover:text-amber-300">★</span>
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="border-t border-slate-100 pt-4">
+            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2" for="comments-textarea">Extraction Comments</label>
+            <textarea id="comments-textarea" [(ngModel)]="comments" rows="3" placeholder="Describe flow behavior, extraction highlights, acidity profile..."
                 class="w-full bg-slate-50 border border-slate-200/60 rounded-2xl py-3 px-4 text-slate-900 font-medium focus:bg-white focus:border-amber-500 outline-none transition-all placeholder:text-slate-400/80 resize-none"></textarea>
         </div>
     </div>
@@ -83,6 +204,6 @@
     <!-- Action button -->
     <button (click)="saveReading()"
         class="w-full py-4 text-sm font-black uppercase tracking-widest bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-[0.98] text-white rounded-[2rem] transition-all shadow-xl shadow-amber-500/25">
-        Save Shot Run
+        Save Shot Log
     </button>
 </div>

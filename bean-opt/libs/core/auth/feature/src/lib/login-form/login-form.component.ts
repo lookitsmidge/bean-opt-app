@@ -1,13 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, effect } from "@angular/core";
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { AuthStore } from "@boa/core-auth-application";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     selector: 'lib-login-form',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule],
     templateUrl: './login-form.component.html',
     styles: [`
         .animate-in { 
@@ -37,6 +40,15 @@ import { AuthStore } from "@boa/core-auth-application";
                 transform: translateY(0px); 
             } 
         }
+        .logo-box {
+            background: color-mix(in srgb, var(--mat-sys-surface-container) 60%, transparent);
+            border: 1px solid color-mix(in srgb, var(--mat-sys-outline-variant) 30%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .logo-icon {
+            color: var(--mat-sys-primary);
+        }
     `],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -44,6 +56,7 @@ export class LoginFormComponent {
     protected authStore = inject(AuthStore);
     mode = input<'login' | 'signup'>('login');
     isLoading = input<boolean>(false);
+    logoSrc = input<string | null>(null);
 
     submitAuth = output<{ email: string, password: string, displayName: string, privacyPolicyAccepted: boolean }>();
     googleLogin = output<void>();

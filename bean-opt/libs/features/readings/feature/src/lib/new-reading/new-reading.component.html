@@ -21,6 +21,11 @@
                  [class.border-amber-500]="timerActive() && !lapActive()"
                  [class.bg-amber-50/20]="timerActive() && !lapActive()">
                 <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1">Preinfusion</span>
+                @if (selectedCoffeeTargets().length > 0 && (selectedCoffeeTargets()[0].min_preinfusion_time !== null || selectedCoffeeTargets()[0].max_preinfusion_time !== null)) {
+                    <span class="text-[9px] font-black text-amber-600 mb-1 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-100/50">
+                        Target: {{ selectedCoffeeTargets()[0].min_preinfusion_time ?? '?' }}-{{ selectedCoffeeTargets()[0].max_preinfusion_time ?? '?' }}s
+                    </span>
+                }
                 @if (timerActive()) {
                     <span class="text-3xl font-black tracking-tight text-slate-800 font-mono py-1.5">
                         {{ preinfusionTime().toFixed(1) }}s
@@ -42,6 +47,11 @@
                  [class.border-emerald-500]="timerActive() && lapActive()"
                  [class.bg-emerald-50/20]="timerActive() && lapActive()">
                 <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1">Extraction</span>
+                @if (selectedCoffeeTargets().length > 0 && (selectedCoffeeTargets()[0].min_extraction_time !== null || selectedCoffeeTargets()[0].max_extraction_time !== null)) {
+                    <span class="text-[9px] font-black text-emerald-600 mb-1 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100/50">
+                        Target: {{ selectedCoffeeTargets()[0].min_extraction_time ?? '?' }}-{{ selectedCoffeeTargets()[0].max_extraction_time ?? '?' }}s
+                    </span>
+                }
                 @if (timerActive()) {
                     <span class="text-3xl font-black tracking-tight text-slate-800 font-mono py-1.5">
                         {{ extractionTime().toFixed(1) }}s

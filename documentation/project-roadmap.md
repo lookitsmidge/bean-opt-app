@@ -70,6 +70,8 @@ _Goal: Enterprise performance at hobbyist costs._
 - `[ ]` **Shot Charts & Mapping**:
   - Render extraction graphs (flow rate, yield progression curves) and interactive analytics.
   - Double/Single basket filter toggle logs.
+- `[ ]` **Follow Workflow Assistance**:
+  - Add option to view and follow step-by-step instructions of the selected workflow during an active shot extraction session.
 
 ### Custom Equipment & Setup Assignment
 - `[ ]` **Custom Equipment UI**:

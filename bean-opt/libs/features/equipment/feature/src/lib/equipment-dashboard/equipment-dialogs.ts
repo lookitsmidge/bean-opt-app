@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { CoffeeMachine, CoffeeGrinder, Setup, Workflow } from '@boa/features/equipment/domain';
+import { CoffeeMachine, CoffeeGrinder, Setup, Workflow, CoffeeEquipment } from '@boa/features/equipment/domain';
 
 // ==========================================
 // 1. MACHINE FORM DIALOG
@@ -180,6 +180,15 @@ export class GrinderFormDialogComponent implements OnInit {
           </mat-select>
         </mat-form-field>
 
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Custom Tools / Accessories</mat-label>
+          <mat-select formControlName="equipmentIds" multiple>
+            @for (eq of customEquipments; track eq.id) {
+              <mat-option [value]="eq.id">{{ eq.name }} ({{ eq.type }})</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
         @if (isEditMode) {
           <div class="flex items-center justify-between py-2 border-t border-solid border-slate-50 mt-4">
             <span class="text-xs font-black uppercase tracking-wider text-slate-500">Status</span>
@@ -199,23 +208,26 @@ export class GrinderFormDialogComponent implements OnInit {
 export class SetupFormDialogComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<SetupFormDialogComponent>);
-  private data = inject<{ setup?: Setup; machines: CoffeeMachine[]; grinders: CoffeeGrinder[] }>(MAT_DIALOG_DATA);
+  private data = inject<{ setup?: Setup; machines: CoffeeMachine[]; grinders: CoffeeGrinder[]; customEquipments?: CoffeeEquipment[] }>(MAT_DIALOG_DATA);
 
   form!: FormGroup;
   isEditMode = false;
   machines: CoffeeMachine[] = [];
   grinders: CoffeeGrinder[] = [];
+  customEquipments: CoffeeEquipment[] = [];
 
   ngOnInit() {
     this.isEditMode = !!this.data?.setup;
     this.machines = this.data?.machines || [];
     this.grinders = this.data?.grinders || [];
+    this.customEquipments = this.data?.customEquipments || [];
     const s = this.data?.setup;
 
     this.form = this.fb.group({
       name: [s?.name || '', Validators.required],
       machineId: [s?.machineId || null],
       grinderId: [s?.grinderId || null],
+      equipmentIds: [s?.equipmentIds || []],
       active: [s?.active ?? true]
     });
   }
@@ -373,6 +385,79 @@ export class WorkflowFormDialogComponent implements OnInit {
 
   removeStep(index: number) {
     this.steps.removeAt(index);
+  }
+
+  submit() {
+    if (this.form.valid) this.dialogRef.close(this.form.value);
+  }
+
+  cancel() {
+    this.dialogRef.close(null);
+  }
+}
+
+// ==========================================
+// 5. CUSTOM EQUIPMENT FORM DIALOG
+// ==========================================
+@Component({
+  selector: 'lib-custom-equipment-form-dialog',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatSlideToggleModule],
+  template: `
+    <h2 mat-dialog-title class="font-black uppercase tracking-wider text-slate-800 m-0 pb-2 border-b border-solid border-slate-100">
+      {{ isEditMode ? 'Edit Tool' : 'Add Custom Tool' }}
+    </h2>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-dialog-content class="space-y-4 pt-6 pb-2 min-w-[320px]">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Tool / Accessory Name</mat-label>
+          <input matInput formControlName="name" placeholder="E.g., IMS High Flow Rate Basket">
+          <mat-error>Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Type</mat-label>
+          <mat-select formControlName="type">
+            @for (type of equipmentTypes; track type) {
+              <mat-option [value]="type">{{ type }}</mat-option>
+            }
+          </mat-select>
+          <mat-error>Type is required</mat-error>
+        </mat-form-field>
+
+        @if (isEditMode) {
+          <div class="flex items-center justify-between py-2 border-t border-solid border-slate-50 mt-4">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-500">Status</span>
+            <mat-slide-toggle formControlName="active">Active Tool</mat-slide-toggle>
+          </div>
+        }
+      </mat-dialog-content>
+      <mat-dialog-actions align="end" class="gap-2 pt-4 border-t border-solid border-slate-100">
+        <button mat-button type="button" (click)="cancel()" class="uppercase tracking-widest text-xs font-black text-slate-500">Abort</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" class="uppercase tracking-widest text-xs font-black px-6 py-2 rounded-xl">
+          Save
+        </button>
+      </mat-dialog-actions>
+    </form>
+  `
+})
+export class CustomEquipmentFormDialogComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private dialogRef = inject(MatDialogRef<CustomEquipmentFormDialogComponent>);
+  private data = inject<{ equipment?: CoffeeEquipment }>(MAT_DIALOG_DATA, { optional: true });
+
+  form!: FormGroup;
+  isEditMode = false;
+  equipmentTypes = ['Basket', 'Portafilter', 'Shaker', 'Tamper', 'WDT', 'Scale', 'Other'];
+
+  ngOnInit() {
+    this.isEditMode = !!this.data?.equipment;
+    const eq = this.data?.equipment;
+    this.form = this.fb.group({
+      name: [eq?.name || '', Validators.required],
+      type: [eq?.type || 'Basket', Validators.required],
+      active: [eq?.active ?? true]
+    });
   }
 
   submit() {

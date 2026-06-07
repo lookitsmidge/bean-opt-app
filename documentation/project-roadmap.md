@@ -74,7 +74,7 @@ _Goal: Enterprise performance at hobbyist costs._
   - Add option to view and follow step-by-step instructions of the selected workflow during an active shot extraction session.
 
 ### Custom Equipment & Setup Assignment
-- `[ ]` **Custom Equipment UI**:
+- `[x]` **Custom Equipment UI**:
   - Build UI views/dialogs for registering custom equipment (e.g. *IMS High Flow Rate Basket*, *Normcore Shaker*, *Normcore V4 Tamper*, *Normcore Bottomless Portafilter*) into the `coffee_equipments` database table.
   - Build UI controls inside the setup configurator to associate these tools to specific configuration setups using the `setup_equipments` database link-table.
 
@@ -91,7 +91,9 @@ _Goal: Enterprise performance at hobbyist costs._
 3. **Phase 5-6: Stopwatch & Extraction Targets**: Resolved stopwatch lap splitting bugs, added multiple target profile definitions per coffee, and cascade saved target ranges.
 4. **Phase 7-8: Pre-infusion Targets & Manual Timers**: Added support for pre-infusion targets in coffee forms, clarified flow-rate metrics apply strictly to extraction, and added manual input support for timing segments.
 5. **Phase 9: Reading Edits & Advanced Defaults**: Completed edit page mapping, overall last shot defaults, bean-specific parameter default overrides on dropdown changes, targets display box on log page, and enhanced glowing active stars layout.
+6. **Phase 11: Custom Equipment & Setup Assignment**: Added domain models, data repository, and SignalStore for custom accessories. Integrated tools multiselect inside the setup configurations form and displayed assigned accessories as chips on setups cards.
 
 ## Next Session Focus
-- **Epic Authentication**: Complete user authentication signup flow, admin authorization guards, and accounts dashboard layouts.
-- **E2E & Shell Layouts**: Connect route guards and transition the interface shell to a headerless design.
+- **Follow Workflow Assistance**: Build UI controls in log/edit page to view and walk through ordered workflow instructions during an active timing session.
+- **Shot Diagnosis (Shot Doctor)**: Integrate corrective algorithm wizards based on taste and time outcomes.
+- **Database Seeding**: Write Postgres seed files to automate initial database installations.

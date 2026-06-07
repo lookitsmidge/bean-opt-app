@@ -13,7 +13,7 @@ export class SupabaseSetupRepository implements ISetupRepository {
     return new Observable<Setup[]>((subscriber) => {
       this.supabase
         .from('setups')
-        .select('*')
+        .select('*, setup_equipments(*)')
         .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .then(({ data, error }) => {
@@ -30,7 +30,7 @@ export class SupabaseSetupRepository implements ISetupRepository {
     return new Observable<Setup | null>((subscriber) => {
       this.supabase
         .from('setups')
-        .select('*')
+        .select('*, setup_equipments(*)')
         .eq('id', id)
         .maybeSingle()
         .then(({ data, error }) => {
@@ -57,6 +57,26 @@ export class SupabaseSetupRepository implements ISetupRepository {
       });
 
     if (error) throw error;
+
+    // Sync setup custom tools in setup_equipments junction table
+    const { error: deleteError } = await this.supabase
+      .from('setup_equipments')
+      .delete()
+      .eq('setup_id', setup.id);
+
+    if (deleteError) throw deleteError;
+
+    if (setup.equipmentIds && setup.equipmentIds.length > 0) {
+      const links = setup.equipmentIds.map((equipId) => ({
+        setup_id: setup.id,
+        equipment_id: equipId,
+      }));
+      const { error: insertError } = await this.supabase
+        .from('setup_equipments')
+        .insert(links);
+
+      if (insertError) throw insertError;
+    }
   }
 
   async deleteSetup(id: string): Promise<void> {
@@ -77,6 +97,7 @@ export class SupabaseSetupRepository implements ISetupRepository {
       grinderId: row.grinder_id,
       active: Boolean(row.active),
       createdAt: row.created_at,
+      equipmentIds: (row.setup_equipments || []).map((se: any) => se.equipment_id),
     };
   }
 

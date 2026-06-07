@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CoffeeMachine, CoffeeGrinder, Workflow, WorkflowStep } from '@boa/features/equipment/domain';
+import { CoffeeMachine, CoffeeGrinder, Workflow, WorkflowStep, CoffeeEquipment } from '@boa/features/equipment/domain';
 
 @Component({
   selector: 'lib-equipment-cards',
@@ -13,13 +13,21 @@ import { CoffeeMachine, CoffeeGrinder, Workflow, WorkflowStep } from '@boa/featu
   styleUrls: ['./equipment-cards.component.css']
 })
 export class EquipmentCardsComponent {
-  @Input() type!: 'machine' | 'grinder' | 'setup' | 'workflow';
+  @Input() type!: 'machine' | 'grinder' | 'setup' | 'workflow' | 'custom';
   @Input() items: any[] = [];
   @Input() machines: CoffeeMachine[] = [];
   @Input() grinders: CoffeeGrinder[] = [];
+  @Input() customEquipments: CoffeeEquipment[] = [];
 
   @Output() editRequested = new EventEmitter<any>();
   @Output() deleteRequested = new EventEmitter<string>();
+
+  getCustomEquipmentNames(equipmentIds: string[] | undefined): string[] {
+    if (!equipmentIds || equipmentIds.length === 0) return [];
+    return equipmentIds
+      .map((id) => this.customEquipments.find((x) => x.id === id)?.name)
+      .filter((name): name is string => !!name);
+  }
 
   getMachineName(machineId: string | null): string {
     if (!machineId) return 'Direct Extraction (No Machine)';

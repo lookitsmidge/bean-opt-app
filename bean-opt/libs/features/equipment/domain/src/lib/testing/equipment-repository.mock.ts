@@ -4,6 +4,7 @@ import { ICoffeeMachineRepository } from '../coffee-machine-repository.interface
 import { ICoffeeGrinderRepository } from '../coffee-grinder-repository.interface';
 import { ISetupRepository } from '../setup-repository.interface';
 import { IWorkflowRepository } from '../workflow-repository.interface';
+import { ICoffeeEquipmentRepository } from '../coffee-equipment-repository.interface';
 
 export class CoffeeMachineRepositoryMock implements ICoffeeMachineRepository {
   getMachines = vi.fn().mockReturnValue(of([]));
@@ -33,4 +34,11 @@ export class WorkflowRepositoryMock implements IWorkflowRepository {
   deleteWorkflow = vi.fn().mockReturnValue(Promise.resolve());
   saveWorkflowStep = vi.fn().mockReturnValue(Promise.resolve());
   deleteWorkflowStep = vi.fn().mockReturnValue(Promise.resolve());
+}
+
+export class CoffeeEquipmentRepositoryMock implements ICoffeeEquipmentRepository {
+  getEquipments = vi.fn().mockReturnValue(of([]));
+  getEquipmentById = vi.fn().mockReturnValue(of(null));
+  saveEquipment = vi.fn().mockReturnValue(Promise.resolve());
+  deleteEquipment = vi.fn().mockReturnValue(Promise.resolve());
 }

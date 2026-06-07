@@ -22,12 +22,14 @@ import {
   COFFEE_GRINDER_REPOSITORY_TOKEN,
   SETUP_REPOSITORY_TOKEN,
   WORKFLOW_REPOSITORY_TOKEN,
+  COFFEE_EQUIPMENT_REPOSITORY_TOKEN,
 } from '@boa/features/equipment/domain';
 import {
   SupabaseCoffeeGrinderRepository,
   SupabaseCoffeeMachineRepository,
   SupabaseSetupRepository,
   SupabaseWorkflowRepository,
+  SupabaseCoffeeEquipmentRepository,
 } from '@boa/features/equipment/data-access';
 
 const serviceProviders: (Provider | EnvironmentProviders)[] = [
@@ -39,6 +41,7 @@ const serviceProviders: (Provider | EnvironmentProviders)[] = [
   { provide: COFFEE_GRINDER_REPOSITORY_TOKEN, useClass: SupabaseCoffeeGrinderRepository },
   { provide: SETUP_REPOSITORY_TOKEN, useClass: SupabaseSetupRepository },
   { provide: WORKFLOW_REPOSITORY_TOKEN, useClass: SupabaseWorkflowRepository },
+  { provide: COFFEE_EQUIPMENT_REPOSITORY_TOKEN, useClass: SupabaseCoffeeEquipmentRepository },
 ];
 
 export const appConfig: ApplicationConfig = {

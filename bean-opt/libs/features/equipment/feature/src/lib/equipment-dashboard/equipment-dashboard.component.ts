@@ -11,20 +11,23 @@ import {
   CoffeeMachineStore,
   CoffeeGrinderStore,
   SetupStore,
-  WorkflowStore
+  WorkflowStore,
+  CoffeeEquipmentStore
 } from '@boa/features/equipment/application';
 import {
   CoffeeMachine,
   CoffeeGrinder,
   Setup,
   Workflow,
-  WorkflowStep
+  WorkflowStep,
+  CoffeeEquipment
 } from '@boa/features/equipment/domain';
 import {
   MachineFormDialogComponent,
   GrinderFormDialogComponent,
   SetupFormDialogComponent,
-  WorkflowFormDialogComponent
+  WorkflowFormDialogComponent,
+  CustomEquipmentFormDialogComponent
 } from './equipment-dialogs';
 import { EquipmentCardsComponent } from '@boa/features/equipment/ui';
 
@@ -49,6 +52,7 @@ export class EquipmentDashboardComponent implements OnInit {
   protected readonly grinderStore = inject(CoffeeGrinderStore);
   protected readonly setupStore = inject(SetupStore);
   protected readonly workflowStore = inject(WorkflowStore);
+  protected readonly customEquipmentStore = inject(CoffeeEquipmentStore);
   private readonly auth = inject(AuthStore);
   private readonly dialog = inject(MatDialog);
 
@@ -59,6 +63,7 @@ export class EquipmentDashboardComponent implements OnInit {
       this.grinderStore.loadGrinders(user.uid);
       this.setupStore.loadSetups(user.uid);
       this.workflowStore.loadWorkflows(user.uid);
+      this.customEquipmentStore.loadEquipments(user.uid);
     }
   }
 
@@ -142,7 +147,11 @@ export class EquipmentDashboardComponent implements OnInit {
   openAddSetup() {
     const dialogRef = this.dialog.open(SetupFormDialogComponent, {
       width: '400px',
-      data: { machines: this.machineStore.items(), grinders: this.grinderStore.items() }
+      data: {
+        machines: this.machineStore.items(),
+        grinders: this.grinderStore.items(),
+        customEquipments: this.customEquipmentStore.items()
+      }
     });
     dialogRef.afterClosed().subscribe((res) => {
       const user = this.auth.user();
@@ -153,6 +162,7 @@ export class EquipmentDashboardComponent implements OnInit {
           name: res.name,
           machineId: res.machineId || null,
           grinderId: res.grinderId || null,
+          equipmentIds: res.equipmentIds || [],
           active: true,
           createdAt: new Date().toISOString()
         });
@@ -163,7 +173,12 @@ export class EquipmentDashboardComponent implements OnInit {
   openEditSetup(setup: Setup) {
     const dialogRef = this.dialog.open(SetupFormDialogComponent, {
       width: '400px',
-      data: { setup, machines: this.machineStore.items(), grinders: this.grinderStore.items() }
+      data: {
+        setup,
+        machines: this.machineStore.items(),
+        grinders: this.grinderStore.items(),
+        customEquipments: this.customEquipmentStore.items()
+      }
     });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
@@ -172,6 +187,7 @@ export class EquipmentDashboardComponent implements OnInit {
           name: res.name,
           machineId: res.machineId || null,
           grinderId: res.grinderId || null,
+          equipmentIds: res.equipmentIds || [],
           active: res.active ?? setup.active
         });
       }
@@ -244,6 +260,44 @@ export class EquipmentDashboardComponent implements OnInit {
   deleteWorkflow(id: string) {
     if (confirm('Delete this workflow?')) {
       this.workflowStore.deleteWorkflow(id);
+    }
+  }
+
+  // --- Custom Equipment Dialogs ---
+  openAddCustomEquipment() {
+    const dialogRef = this.dialog.open(CustomEquipmentFormDialogComponent, { width: '400px' });
+    dialogRef.afterClosed().subscribe((res) => {
+      const user = this.auth.user();
+      if (res && user) {
+        this.customEquipmentStore.addEquipment({
+          id: crypto.randomUUID(),
+          userId: user.uid,
+          name: res.name,
+          type: res.type,
+          active: true,
+          createdAt: new Date().toISOString()
+        });
+      }
+    });
+  }
+
+  openEditCustomEquipment(equipment: CoffeeEquipment) {
+    const dialogRef = this.dialog.open(CustomEquipmentFormDialogComponent, { width: '400px', data: { equipment } });
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.customEquipmentStore.addEquipment({
+          ...equipment,
+          name: res.name,
+          type: res.type,
+          active: res.active ?? equipment.active
+        });
+      }
+    });
+  }
+
+  deleteCustomEquipment(id: string) {
+    if (confirm('Delete this custom tool?')) {
+      this.customEquipmentStore.deleteEquipment(id);
     }
   }
 }

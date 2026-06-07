@@ -6,4 +6,5 @@ export interface Setup {
   grinderId: string | null;
   active: boolean;
   createdAt: string;
+  equipmentIds?: string[];
 }

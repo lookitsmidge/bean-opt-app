@@ -6,21 +6,21 @@ import { IWorkflowRepository } from './workflow-repository.interface';
 import { ICoffeeEquipmentRepository } from './coffee-equipment-repository.interface';
 
 export const COFFEE_MACHINE_REPOSITORY_TOKEN = new InjectionToken<ICoffeeMachineRepository>(
-  'COFFEE_MACHINE_REPOSITORY_TOKEN'
+  'JAMESMARTLAND_DDD_CORE_COFFEE_MACHINE_REPOSITORY_TOKEN'
 );
 
 export const COFFEE_GRINDER_REPOSITORY_TOKEN = new InjectionToken<ICoffeeGrinderRepository>(
-  'COFFEE_GRINDER_REPOSITORY_TOKEN'
+  'JAMESMARTLAND_DDD_CORE_COFFEE_GRINDER_REPOSITORY_TOKEN'
 );
 
 export const SETUP_REPOSITORY_TOKEN = new InjectionToken<ISetupRepository>(
-  'SETUP_REPOSITORY_TOKEN'
+  'JAMESMARTLAND_DDD_CORE_SETUP_REPOSITORY_TOKEN'
 );
 
 export const WORKFLOW_REPOSITORY_TOKEN = new InjectionToken<IWorkflowRepository>(
-  'WORKFLOW_REPOSITORY_TOKEN'
+  'JAMESMARTLAND_DDD_CORE_WORKFLOW_REPOSITORY_TOKEN'
 );
 
 export const COFFEE_EQUIPMENT_REPOSITORY_TOKEN = new InjectionToken<ICoffeeEquipmentRepository>(
-  'COFFEE_EQUIPMENT_REPOSITORY_TOKEN'
+  'JAMESMARTLAND_DDD_CORE_COFFEE_EQUIPMENT_REPOSITORY_TOKEN'
 );

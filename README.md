@@ -38,20 +38,24 @@ bean-opt-app/
 `npx nx serve bean-opt-web`
 
 
-## Supabase Links
+## Supabase Links (Local)
 [Supabase Studio (Local)](http://172.0.0.1:54323)
+
 [Supabase Mailpit](http://172.0.0.1:54324)
 
-
 [Project URL](http://172.0.0.1:54321)
-[Project URL](http://172.0.0.1:54321/rest/v1)
-[Project URL](http://172.0.0.1:54321/graphql/v1)
-[Project URL](http://172.0.0.1:54321/functions/v1)
+
+[Rest URL](http://172.0.0.1:54321/rest/v1)
+
+[GraphQL URL](http://172.0.0.1:54321/graphql/v1)
+
+[Functions URL](http://172.0.0.1:54321/functions/v1)
+
 [Storage](http://127.0.0.1:54321/storage/v1/s3)
+
 [MCP](http://172.0.0.1.54321/mcp)
 
-**Database URL**: `postgresql://postgres:postgres@172.0.0.1:54322/postgres
-
+**Database URL**: `postgresql://postgres:postgres@172.0.0.1:54322/postgres`
 
 
 ## License

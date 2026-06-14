@@ -54,5 +54,10 @@ bean-opt-app/
 
 
 
-## License 
-This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/)
+## License
+
+This project is proprietary and licensed under a custom **Non-Commercial Evaluation License**. 
+
+You are free to download, study, and run this project locally for personal or educational purposes. However, using this architecture, or substantial portions derived from it, for commercial applications, client work, or paid products is strictly prohibited.
+
+For full terms and restrictions, see the [LICENSE.md](./LICENSE.md) file in the root of this repository.

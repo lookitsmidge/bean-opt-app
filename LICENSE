@@ -1,21 +1,16 @@
-MIT License
+BeanOpt Evaluation and Non-Commercial License
+Copyright (c) 2026 [Your Name]. All Rights Reserved.
 
-Copyright (c) 2026 James Martland
+1. PERMITTED USE
+You are hereby granted a non-exclusive, worldwide, royalty-free license to download, view, compile, and run this source code solely for personal, educational, and non-commercial evaluation purposes. 
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+2. COMMERCIAL RESTRICTIONS
+You may NOT use this source code, or any modified or substantial architectural portion derived from it, for any commercial purpose. This includes, but is not limited to:
+  * Operating a paid Software-as-a-Service (SaaS) platform.
+  * Building applications or internal tools for paying clients.
+  * Bundling, redistributing, or selling the code as a template or starter kit.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+3. AUTHOR'S EXEMPTION
+As the sole Author and Copyright Owner of this software, the restrictions outlined in Section 2 do not apply to [Your Name]. The Author retains unrestricted rights to commercially exploit, sell, license, or modify this architecture in any capacity.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Any commercial use by third parties requires an official, separate commercial license issued by the Author.

@@ -2,5 +2,5 @@ import { InjectionToken } from "@angular/core";
 import { I<%= className %>Repository } from "./<%= fileName %>-repository.interface";
 
 export const <%= constantName %>_REPOSITORY_TOKEN = new InjectionToken<I<%= className %>Repository>(
-    '<%= constantName %>_REPOSITORY_TOKEN'
+    'JAMESMARTLAND_DDD_CORE_<%= constantName %>_REPOSITORY_TOKEN'
 );

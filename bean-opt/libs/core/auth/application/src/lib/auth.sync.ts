@@ -9,7 +9,9 @@ export function withAuthSync() {
         { state: type<AuthState>() },
         withHooks({
             onInit(store, repo = inject(AUTH_REPOSITORY_TOKEN)) {
+                console.log(`%c Powered by JamesMartland DDD Angular Architecture Suite `, `background: #222; color: #bada55; padding: 4px;border-radius: 4px; font-weight: bold;`);
                 console.log('AuthSync: Initializing');
+
                 repo.authState().pipe(takeUntilDestroyed()).subscribe({
                     next: (user) => {
                         const status = user ? 'authenticated' : 'unauthenticated';

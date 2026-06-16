@@ -97,4 +97,4 @@ _Goal: Enterprise performance at hobbyist costs._
 - **Follow Workflow Assistance**: Build UI controls in log/edit page to view and walk through ordered workflow instructions during an active timing session.
 - **Shot Diagnosis (Shot Doctor)**: Integrate corrective algorithm wizards based on taste and time outcomes.
 - **Database Seeding**: Write Postgres seed files to automate initial database installations.
-- **Platform backend rename**: We are renaming the backend of this app from bean-opt to `caldera` (new codename) (whilst retaining the beanopt branding)
+- **Platform backend rename**: We are renaming the backend of this app from bean-opt to `assay` (new codename) (whilst retaining the beanopt branding)
